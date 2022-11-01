@@ -1,22 +1,19 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ClientsModule } from '@nestjs/microservices';
 import { ConfigModule } from '@nestjs/config';
-import { ConfigModuleConfig } from './config/config-module/config-module.config';
-import { GrpcConnections } from './config/grpc/grpc.connections';
-import { KnexModule } from 'nest-knexjs';
-import { KnexConfig } from './config/knex/knex.config';
+import { TelegrafModule } from 'nestjs-telegraf';
+
+import { ConfigModuleConfig } from '../../../common/config/config-module/config-module.config';
+import { UserModule } from './user/user.module';
+import { TelegramConfig } from './config/telegram/telegram.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot(ConfigModuleConfig),
-    ClientsModule.registerAsync(GrpcConnections),
-    KnexModule.forRootAsync({
-      useClass: KnexConfig,
+    TelegrafModule.forRootAsync({
+      useClass: TelegramConfig,
     }),
+    UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}

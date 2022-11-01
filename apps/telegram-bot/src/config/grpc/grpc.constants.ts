@@ -1,1 +1,1 @@
-export const PACKAGE_NAME = 'API_MICROSERVICE_PACKAGE';
+export const PACKAGE_NAME = 'PACKAGE_NAME';

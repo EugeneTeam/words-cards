@@ -14,7 +14,7 @@ export class GrpcConfig implements ClientsModuleOptionsFactory {
       options: {
         url: this.configService.getOrThrow<string>('API_URL'),
         package: 'proto',
-        protoPath: join(__dirname, 'proto/proto.proto'),
+        protoPath: join(__dirname, 'proto/index.proto'),
       },
     };
   }

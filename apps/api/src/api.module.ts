@@ -1,10 +1,18 @@
 import { Module } from '@nestjs/common';
-import { ApiService } from './api.service';
-import { ApiController } from './api.controller';
+import { ConfigModule } from '@nestjs/config';
+import { KnexModule } from 'nest-knexjs';
+
+import { UserModule } from './user/user.module';
+import { KnexConfig } from './config/knex/knex.config';
+import { ConfigModuleConfig } from '../../../common/config/config-module/config-module.config';
 
 @Module({
-  imports: [],
-  controllers: [ApiController],
-  providers: [ApiService],
+  imports: [
+    ConfigModule.forRoot(ConfigModuleConfig),
+    KnexModule.forRootAsync({
+      useClass: KnexConfig,
+    }),
+    UserModule,
+  ],
 })
 export class ApiModule {}
