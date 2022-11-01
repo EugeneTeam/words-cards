@@ -1,12 +1,13 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
+import { PACKAGE_NAME } from './config/grpc/grpc.constants';
 
 @Injectable()
 export class AppService implements OnModuleInit {
   private heroesService: any;
 
-  constructor(@Inject('HERO_PACKAGE') private client: ClientGrpc) {}
+  constructor(@Inject(PACKAGE_NAME) private client: ClientGrpc) {}
 
   onModuleInit() {
     this.heroesService = this.client.getService<any>('HeroesService');
