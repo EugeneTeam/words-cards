@@ -21,7 +21,9 @@
     "test:e2e": "jest --config ./apps/telegram-bot/test/jest-e2e.json",
     "start:api": "nest start api --watch",
     "start:bot": "nest start telegram-bot --watch",
-    "start:all": "concurrently \"npm run start:api\" \"npm run start:bot\""
+    "start:all": "concurrently \"npm run start:api\" \"npm run start:bot\"",
+    "migration:up": "knex migrate:latest",
+    "migration:create": "knex migrate:make --"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.7.3",
@@ -31,6 +33,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/microservices": "^9.1.6",
     "@nestjs/platform-express": "^9.0.0",
+    "concurrently": "^7.5.0",
     "knex": "^2.3.0",
     "nest-knexjs": "^0.0.12",
     "pg": "^8.8.0",
