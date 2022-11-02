@@ -14,16 +14,16 @@ export class UserService implements OnModuleInit {
 
   constructor(@Inject(PACKAGE_NAME) private readonly client: ClientGrpc) {}
 
-  onModuleInit(): void {
+  public onModuleInit(): void {
     this.userService =
       this.client.getService<UserRepositoryInterface<UserInterface>>(
         'UserService',
       );
   }
 
-  async insertOne(data: InsertUserInterface): Promise<UserInterface> {
+  public async insertOne(data: InsertUserInterface): Promise<UserInterface> {
     const observable: Observable<UserInterface> =
       await this.userService.insertOne(data);
-    return getDataFromObservableUtil(observable);
+    return getDataFromObservableUtil<UserInterface>(observable);
   }
 }

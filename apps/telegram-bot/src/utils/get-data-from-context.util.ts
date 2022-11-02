@@ -1,5 +1,7 @@
+import { ContextInterface } from '../interfaces/context.interface';
+
 export class TelegrafContext {
-  static getNickname(context: any): string {
+  static getNickname(context: ContextInterface): string {
     return (
       context.update?.message?.from?.username ||
       context.update?.message?.chat?.username ||
@@ -7,23 +9,22 @@ export class TelegrafContext {
     );
   }
 
-  static getFirstName(context: any): string {
+  static getFirstName(context: ContextInterface): string {
     return (
       context.update?.message?.from?.first_name ||
       context.update?.callback_query?.from?.first_name
     );
   }
 
-  static getLastName(context: any): string {
+  static getLastName(context: ContextInterface): string {
     return (
       context.update?.message?.from?.last_name ||
       context.update?.callback_query?.from?.last_name
     );
   }
 
-  static getTelegramId(context: any) {
+  static getTelegramId(context: ContextInterface) {
     return (
-      context?.userTelegramId ||
       context?.update?.message?.from?.id ||
       context?.update?.callback_query?.from?.id
     );

@@ -7,7 +7,17 @@
   "compilerOptions": {
     "webpack": true,
     "tsConfigPath": "apps/telegram-bot/tsconfig.app.json",
-    "assets": ["**/*.proto"],
+    "assets": [{
+      "include": "**/*.proto",
+      "watchAssets": true
+    }, {
+      "include": "**/*.json",
+      "watchAssets": true
+    }, {
+      "include": "**/*.png",
+      "watchAssets": true
+    }
+    ],
     "watchAssets": true
   },
   "projects": {
@@ -18,7 +28,7 @@
       "sourceRoot": "apps/telegram-bot/src",
       "compilerOptions": {
         "tsConfigPath": "apps/telegram-bot/tsconfig.app.json",
-        "assets": ["**/*.proto"],
+        "assets": ["**/*.proto", "**/*.json"],
         "watchAssets": true
       }
     },
@@ -29,7 +39,7 @@
       "sourceRoot": "apps/api/src",
       "compilerOptions": {
         "tsConfigPath": "apps/api/tsconfig.app.json",
-        "assets": ["**/*.proto"],
+        "assets": ["**/*.proto", "**/*.json"],
         "watchAssets": true
       }
     }
