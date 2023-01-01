@@ -1,10 +1,9 @@
 import { Ctx, Scene, SceneEnter } from 'nestjs-telegraf';
-import { createReadStream } from 'fs';
-import { join } from 'path';
 
 import { ContextInterface } from '../interfaces/context.interface';
 import { WelcomeParameterInterface } from '../languages/interfaces/welcome.parameter-interface';
 import { StartSceneDataInterface } from './interfaces/start-scene-data.interface';
+import { ReplyWithPhotoUtil } from '../utils/reply-with-photo.util';
 
 @Scene('start-scene')
 export class StartScene {
@@ -18,16 +17,6 @@ export class StartScene {
         data,
       );
 
-    await context.replyWithPhoto(
-      {
-        source: createReadStream(
-          join(__dirname, 'image', 'static-images', 'welcome.png'),
-        ),
-      },
-      {
-        caption: title,
-        parse_mode: 'HTML',
-      },
-    );
+    await ReplyWithPhotoUtil(context, title, 'image/static-images/welcome.png');
   }
 }
