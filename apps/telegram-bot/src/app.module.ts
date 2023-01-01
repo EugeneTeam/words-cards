@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { TelegramConfig } from './config/telegram/telegram.config';
 import { FileModule } from './file/file.module';
 import { StartScene } from './scenes/start.scene';
+import { MainMenuScene } from './scenes/main-menu/main-menu.scene';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { StartScene } from './scenes/start.scene';
     UserModule,
     FileModule,
     StartScene,
+    MainMenuScene,
   ],
   providers: [],
 })

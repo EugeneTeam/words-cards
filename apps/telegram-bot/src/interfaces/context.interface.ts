@@ -3,7 +3,7 @@ import { AvailableLanguagesEnum } from '../languages/enums/available-languages.e
 import { TranslatorService } from '../languages/translator.service';
 
 export interface ContextInterface extends Context {
-  language: AvailableLanguagesEnum;
+  languageIso: AvailableLanguagesEnum;
   translatorService: TranslatorService;
   update: any;
   scene: any;

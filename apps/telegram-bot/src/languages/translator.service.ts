@@ -2,6 +2,7 @@ import { AvailableLanguagesEnum } from './enums/available-languages.enum';
 
 import * as RU from './translates/ru.json';
 import * as UA from './translates/ua.json';
+import { KeyValueNotFoundError } from './errors/key-value-not-found.error';
 
 const availableTranslations: Record<string, Record<string, string>> = {
   RU,
@@ -9,27 +10,24 @@ const availableTranslations: Record<string, Record<string, string>> = {
 };
 
 export class TranslatorService {
-  private readonly language: AvailableLanguagesEnum;
   private readonly currentText: Record<string, string>;
 
-  constructor(language: AvailableLanguagesEnum) {
-    this.language = language;
-    this.currentText = availableTranslations[language.toUpperCase()];
+  constructor(languageIso: AvailableLanguagesEnum) {
+    this.currentText = availableTranslations[languageIso.toUpperCase()];
   }
 
-  getTranslate<DataInterface>(
+  public getTranslate<DataInterface>(
     key: string,
-    data: DataInterface | object = {},
+    data: DataInterface | object = null,
   ): string | never {
     let text: string = this.currentText[key];
     if (text) {
-      text = text.replace(
-        /\{\{(.+?)\}\}/g,
-        (matching: string, value) => data[value.trim()],
+      text = text.replace(/\{\{(.+?)\}\}/g, (matching: string, value) =>
+        data ? data[value.trim()] : '',
       );
       return text;
+    } else {
+      throw new KeyValueNotFoundError(key);
     }
-
-    return text;
   }
 }

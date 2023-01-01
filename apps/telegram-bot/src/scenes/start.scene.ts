@@ -18,5 +18,7 @@ export class StartScene {
       );
 
     await ReplyWithPhotoUtil(context, title, 'image/static-images/welcome.png');
+
+    await context.scene.enter('main-menu-scene');
   }
 }

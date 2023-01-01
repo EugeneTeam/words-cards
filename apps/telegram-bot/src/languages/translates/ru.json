@@ -1,3 +1,5 @@
 {
-  "welcome": "Добро пожаловать, {{username}}"
+  "welcome": "Добро пожаловать, {{username}}",
+  "main-menu-title": "Главное меню",
+  "main-menu-button-1": "Кнопка"
 }

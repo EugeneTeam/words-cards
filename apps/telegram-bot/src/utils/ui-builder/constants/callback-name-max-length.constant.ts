@@ -1,0 +1,1 @@
+export const CALLBACK_NAME_MAX_LENGTH = 64;
