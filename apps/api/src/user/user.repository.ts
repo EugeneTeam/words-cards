@@ -5,13 +5,14 @@ import { Knex } from 'knex';
 import { UserRepositoryInterface } from './interfaces/user-repository.interface';
 import { UserInterface } from './interfaces/user.interface';
 import { InsertUserInterface } from './interfaces/insert-user.interface';
+import { TABLES } from '../../../../common/constants/tables-names.constant';
 
 @Injectable()
 export class UserRepository implements UserRepositoryInterface<UserInterface> {
   constructor(@InjectModel() private readonly knex: Knex) {}
 
   async insertOne(data: InsertUserInterface): Promise<UserInterface> {
-    await this.knex<InsertUserInterface>('users')
+    await this.knex<InsertUserInterface>(TABLES.USERS)
       .insert(data)
       .onConflict('telegramId')
       .ignore()
@@ -21,7 +22,7 @@ export class UserRepository implements UserRepositoryInterface<UserInterface> {
   }
 
   async getOneByTelegramId(telegramId: string): Promise<UserInterface> {
-    return this.knex<UserInterface>('users')
+    return this.knex<UserInterface>(TABLES.USERS)
       .select()
       .where({ telegramId })
       .first();

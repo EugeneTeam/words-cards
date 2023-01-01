@@ -18,7 +18,7 @@ export class StartAction {
   public async start(@Ctx() context: ContextInterface): Promise<void> {
     const data: InsertUserInterface = {
       telegramId: TelegrafContext.getTelegramId(context),
-      nickname: TelegrafContext.getNickname(context),
+      nickName: TelegrafContext.getNickname(context),
       firstName: TelegrafContext.getFirstName(context),
       lastName: TelegrafContext.getLastName(context),
     };

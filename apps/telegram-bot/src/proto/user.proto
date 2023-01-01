@@ -9,14 +9,14 @@ service UserService {
 message User {
   string uuid = 1;
   string telegramId = 2;
-  string nickname = 3;
+  string nickName = 3;
   string firstName = 4;
   string lastName = 5;
 }
 
 message NewUserRequest {
   string telegramId = 1;
-  optional string nickname = 2;
+  optional string nickName = 2;
   optional string firstName = 3;
   optional string lastName = 4;
 }

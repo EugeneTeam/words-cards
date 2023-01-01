@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { KnexConfig } from './config/knex/knex.config';
 import { ConfigModuleConfig } from '../../../common/config/config-module/config-module.config';
 import { FileModule } from './files/file.module';
+import { LanguageModule } from './language/language.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { FileModule } from './files/file.module';
     }),
     UserModule,
     FileModule,
+    LanguageModule,
   ],
 })
 export class ApiModule {}

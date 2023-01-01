@@ -3,7 +3,7 @@ import { createReadStream } from 'fs';
 import { join } from 'path';
 
 import { ContextInterface } from '../interfaces/context.interface';
-import { WelcomeParameterInterface } from '../languages/parameters-interface/welcome.parameter-interface';
+import { WelcomeParameterInterface } from '../languages/interfaces/welcome.parameter-interface';
 import { StartSceneDataInterface } from './interfaces/start-scene-data.interface';
 
 @Scene('start-scene')

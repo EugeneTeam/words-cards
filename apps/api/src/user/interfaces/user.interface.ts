@@ -1,7 +1,8 @@
 export interface UserInterface {
   uuid: string;
   telegramId: string;
-  nickname: string;
+  nickName: string;
   firstName: string;
   lastName: string;
+  languageUuid: string;
 }

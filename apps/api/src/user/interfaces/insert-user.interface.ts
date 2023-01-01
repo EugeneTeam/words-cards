@@ -1,6 +1,7 @@
 export interface InsertUserInterface {
   telegramId: string;
-  nickname: string;
+  nickName: string;
   firstName: string;
   lastName: string;
+  languageUuid?: string;
 }
