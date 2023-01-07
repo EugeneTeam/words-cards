@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { sessionMiddleware } from '../../middlewares/session.middleware';
 import { defaultLanguagesMiddleware } from '../../middlewares/default-languages.middleware';
 import { translateMiddleware } from '../../middlewares/translate.middleware';
+import { removePreviousKeyboardMiddleware } from '../../middlewares/remove-previous-keyboard.middleware';
 
 @Injectable()
 export class TelegramConfig implements TelegrafOptionsFactory {
@@ -19,6 +20,7 @@ export class TelegramConfig implements TelegrafOptionsFactory {
         sessionMiddleware,
         defaultLanguagesMiddleware,
         translateMiddleware,
+        removePreviousKeyboardMiddleware,
       ],
     };
   }

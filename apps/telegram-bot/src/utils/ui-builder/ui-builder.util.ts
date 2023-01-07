@@ -46,7 +46,11 @@ export class UiBuilderUtil {
     return this;
   }
 
-  public addButton<DataInterface>(textOrTranslateKey: string): this {
+  public addButton<DataInterface>(
+    textOrTranslateKey: string,
+    callback: string | null = null,
+    newLineAfterThisButton = false,
+  ): this {
     let text = textOrTranslateKey;
     if (!this.textInsteadKey) {
       text =
@@ -59,8 +63,21 @@ export class UiBuilderUtil {
       text,
     });
 
+    if (callback) {
+      this.addCallback(callback);
+    }
+
+    if (newLineAfterThisButton) {
+      this.addNewButtonLine();
+    }
+
     this.rewriteButtons();
 
+    return this;
+  }
+
+  public addBackButton(sceneName: string): this {
+    this.addButton('back', `back-to-${sceneName}`);
     return this;
   }
 

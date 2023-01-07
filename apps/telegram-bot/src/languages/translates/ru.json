@@ -1,5 +1,12 @@
 {
   "welcome": "Добро пожаловать, {{username}}",
   "main-menu-title": "Главное меню",
-  "main-menu-button-1": "Кнопка"
+  "main-menu-buttons-words": "Ⓜ Меню слов",
+  "main-menu-buttons-setting": "\uD83D\uDEE0 Настройки",
+  "main-menu-buttons-statistic": "\uD83D\uDCCA Статистика",
+  "words-menu-repeat-words": "\uD83D\uDD01 Повторить слова",
+  "words-menu-learn-words": "\uD83C\uDF93 Учить новые слова",
+  "words-menu-manage-word-list": "⚙ Управлять списком слов",
+  "words-menu-manage-category-list": "⚙ Управлять списком категорий",
+  "back": "\uD83D\uDD19 Назад"
 }
