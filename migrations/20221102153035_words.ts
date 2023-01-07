@@ -11,6 +11,12 @@ export async function up(knex: Knex): Promise<void> {
       .foreign('originalLanguageUuid')
       .references('uuid')
       .inTable('Languages');
+
+    table.uuid('categoryUuid');
+    table.foreign('categoryUuid').references('uuid').inTable('Categories');
+
+    table.uuid('userUuid');
+    table.foreign('userUuid').references('uuid').inTable('Users');
   });
 }
 
