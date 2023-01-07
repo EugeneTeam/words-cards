@@ -77,7 +77,7 @@ export class UiBuilderUtil {
   }
 
   public addBackButton(sceneName: string): this {
-    this.addButton('back', `back-to-${sceneName}`);
+    this.addButton('back', `BACK-TO:${sceneName}`);
     return this;
   }
 

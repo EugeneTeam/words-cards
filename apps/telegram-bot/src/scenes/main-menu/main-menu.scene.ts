@@ -10,7 +10,7 @@ export class MainMenuScene {
       .useInlineKeyboardMethod()
       .addNewButtonLine()
       .addTitle('main-menu-title')
-      .addButton('main-menu-buttons-words', 'open-words-menu-scene', true)
+      .addButton('main-menu-buttons-words', 'OPEN:words-menu-scene', true)
       .addButton('main-menu-buttons-setting', 'callback', true)
       .addButton('main-menu-buttons-statistic', 'callback', true)
       .build();

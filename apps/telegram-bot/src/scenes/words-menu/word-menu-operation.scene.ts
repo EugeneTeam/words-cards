@@ -2,23 +2,20 @@ import { Ctx, Scene, SceneEnter } from 'nestjs-telegraf';
 import { ContextInterface } from '../../interfaces/context.interface';
 import { UiBuilderUtil } from '../../utils/ui-builder/ui-builder.util';
 
-@Scene('words-menu-scene')
-export class WordsMenuScene {
+@Scene('words-menu-operation-scene')
+export class WordMenuOperationScene {
   @SceneEnter()
   public async sceneEnter(@Ctx() context: ContextInterface): Promise<void> {
     await context.removePreviousKeyboard();
     const builder = new UiBuilderUtil(context.languageIso)
       .useInlineKeyboardMethod()
       .addNewButtonLine()
-      .addTitle('main-menu-buttons-words')
-      .addButton('words-menu-repeat-words', 'callback', true)
-      .addButton('words-menu-learn-words', 'callback', true)
-      .addButton(
-        'words-menu-manage-word-list',
-        'OPEN:words-menu-operation-scene',
-        true,
-      )
-      .addButton('words-menu-manage-category-list', 'callback', true)
+      .addTitle('words-operation-title')
+      .addButton('words-operation-add-word', 'callback', true)
+      .addButton('words-operation-remove-word', 'callback', true)
+      .addButton('words-operation-edit-word', 'callback', true)
+      .addButton('words-operation-view-list', 'callback', true)
+      .addButton('words-operation-upload-file', 'callback', true)
       .addBackButton('main-menu-scene')
       .build();
 

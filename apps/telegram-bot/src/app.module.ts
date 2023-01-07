@@ -8,9 +8,9 @@ import { TelegramConfig } from './config/telegram/telegram.config';
 import { FileModule } from './file/file.module';
 import { StartScene } from './scenes/start.scene';
 import { MainMenuScene } from './scenes/main-menu/main-menu.scene';
-import { OpenSceneAction } from './actions/open-scene.action';
 import { WordsMenuScene } from './scenes/words-menu/words-menu.scene';
-import { BackToAction } from './actions/back-to.action';
+import { WordMenuOperationScene } from './scenes/words-menu/word-menu-operation.scene';
+import { CommonAction } from './actions/common.action';
 
 @Module({
   imports: [
@@ -22,9 +22,9 @@ import { BackToAction } from './actions/back-to.action';
     FileModule,
     StartScene,
     MainMenuScene,
-    OpenSceneAction,
     WordsMenuScene,
-    BackToAction,
+    WordMenuOperationScene,
+    CommonAction,
   ],
   providers: [],
 })
