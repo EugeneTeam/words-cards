@@ -11,7 +11,7 @@ export class WordMenuOperationScene {
       .useInlineKeyboardMethod()
       .addNewButtonLine()
       .addTitle('words-operation-title')
-      .addButton('words-operation-add-word', 'callback', true)
+      .addButton('words-operation-add-word', 'OPEN:add-word-wizard', true)
       .addButton('words-operation-remove-word', 'callback', true)
       .addButton('words-operation-edit-word', 'callback', true)
       .addButton('words-operation-view-list', 'callback', true)

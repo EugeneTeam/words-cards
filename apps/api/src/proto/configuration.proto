@@ -1,0 +1,32 @@
+syntax = 'proto3';
+
+package proto;
+
+service ConfigurationService {
+  rpc FindOneByUserUuid(ConfigurationUuid) returns (Configuration);
+  rpc CreateConfiguration(CreateConfiguration) returns (Configuration);
+  rpc UpdateConfiguration(CreateConfigurationInput) returns (Configuration);
+}
+
+message ConfigurationUuid {
+  string uuid = 1;
+}
+
+message Configuration {
+  string uuid = 1;
+  string userUuid = 2;
+  string defaultLanguageForNewWord = 3;
+  string defaultLanguageForWordTranslation = 4;
+  bool isNull = 5;
+}
+
+message CreateConfiguration {
+  string userUuid = 1;
+  string defaultLanguageForNewWord = 3;
+  string defaultLanguageForWordTranslation = 4;
+}
+
+message CreateConfigurationInput {
+  string configUuid = 1;
+  CreateConfiguration data = 2;
+}

@@ -16,5 +16,13 @@
   "words-operation-remove-word": "\uD83D\uDD8D Удалить слово",
   "words-operation-edit-word": "\uD83D\uDD8C Редактировать слово",
   "words-operation-view-list": "\uD83D\uDCDC Список слов",
-  "words-operation-upload-file": "\uD83D\uDCE5 Загрузить файл коллекцию"
+  "words-operation-upload-file": "\uD83D\uDCE5 Загрузить файл коллекцию",
+
+  "enter-word": "Введите слово",
+  "unavailable-symbol": "Unavailable symbol",
+
+  "select-language-for-word": "На каком языке будете добавлять слово?",
+  "select-translation-language": "Выберите язык перевода",
+
+  "user-action-expected": "Ожидается действие пользователя"
 }

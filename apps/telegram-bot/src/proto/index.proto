@@ -1,2 +1,5 @@
 import "user.proto";
 import "file.proto";
+import "configuration.proto";
+import "common.proto";
+import "language.proto";

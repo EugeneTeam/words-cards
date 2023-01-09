@@ -5,4 +5,5 @@ export const TABLES = {
   TRANSLATES: 'Translates',
   WORDS: 'Words',
   WORD_FILES: 'WordFiles',
+  CONFIGURATION: 'Configurations',
 };

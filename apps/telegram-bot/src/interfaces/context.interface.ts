@@ -1,6 +1,6 @@
 import { Context } from 'telegraf';
-import { AvailableLanguagesEnum } from '../languages/enums/available-languages.enum';
-import { TranslatorService } from '../languages/translator.service';
+import { AvailableLanguagesEnum } from '../translator/enums/available-languages.enum';
+import { TranslatorService } from '../translator/translator.service';
 
 export interface ContextInterface extends Context {
   languageIso: AvailableLanguagesEnum;
@@ -8,4 +8,6 @@ export interface ContextInterface extends Context {
   update: any;
   scene: any;
   removePreviousKeyboard(): Promise<void | never>;
+  wizard: any;
+  session: any;
 }

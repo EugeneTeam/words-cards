@@ -23,7 +23,9 @@ export class StartAction {
       lastName: TelegrafContext.getLastName(context),
     };
 
-    await this.userService.insertOne(data);
+    const user = await this.userService.insertOne(data);
+
+    context.session.userUuid = user.uuid;
 
     const username: string =
       TelegrafContext.getFirstName(context) ||

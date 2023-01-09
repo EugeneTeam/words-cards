@@ -1,0 +1,20 @@
+syntax = 'proto3';
+
+import "common.proto";
+
+package proto;
+
+service LanguageService {
+  rpc FindAllLanguages(Empty) returns (Languages);
+}
+
+message Language {
+  string uuid = 1;
+  string name = 2;
+  string iso = 3;
+}
+
+message Languages {
+  repeated Language languages = 1;
+}
+

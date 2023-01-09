@@ -1,9 +1,9 @@
 import { Ctx, Scene, SceneEnter } from 'nestjs-telegraf';
 
 import { ContextInterface } from '../interfaces/context.interface';
-import { WelcomeParameterInterface } from '../languages/interfaces/welcome.parameter-interface';
 import { StartSceneDataInterface } from './interfaces/start-scene-data.interface';
 import { ReplyWithPhotoUtil } from '../utils/reply-with-photo.util';
+import { WelcomeParameterInterface } from '../translator/interfaces/welcome.parameter-interface';
 
 @Scene('start-scene')
 export class StartScene {

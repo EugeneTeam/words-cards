@@ -6,11 +6,11 @@ import { ConfigModuleConfig } from '../../../common/config/config-module/config-
 import { UserModule } from './user/user.module';
 import { TelegramConfig } from './config/telegram/telegram.config';
 import { FileModule } from './file/file.module';
-import { StartScene } from './scenes/start.scene';
-import { MainMenuScene } from './scenes/main-menu/main-menu.scene';
-import { WordsMenuScene } from './scenes/words-menu/words-menu.scene';
-import { WordMenuOperationScene } from './scenes/words-menu/word-menu-operation.scene';
-import { CommonAction } from './actions/common.action';
+import { ConfigurationModule } from './configuration/configuration.module';
+import { ActionsModule } from './actions/actions.module';
+import { ScenesModule } from './scenes/scenes.module';
+import { WizardsModule } from './wizards/wizards.module';
+import { LanguageModule } from './language/language.module';
 
 @Module({
   imports: [
@@ -20,11 +20,11 @@ import { CommonAction } from './actions/common.action';
     }),
     UserModule,
     FileModule,
-    StartScene,
-    MainMenuScene,
-    WordsMenuScene,
-    WordMenuOperationScene,
-    CommonAction,
+    ConfigurationModule,
+    ActionsModule,
+    ScenesModule,
+    WizardsModule,
+    LanguageModule,
   ],
   providers: [],
 })

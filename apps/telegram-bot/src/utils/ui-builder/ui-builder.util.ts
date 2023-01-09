@@ -1,11 +1,11 @@
 import { Markup } from 'telegraf';
 
-import { TranslatorService } from '../../languages/translator.service';
 import { ButtonInterface } from './interfaces/button.interface';
-import { AvailableLanguagesEnum } from '../../languages/enums/available-languages.enum';
 import { CALLBACK_NAME_MAX_LENGTH } from './constants/callback-name-max-length.constant';
 import { CallbackExceededLengthError } from './errors/callback-exceeded-length.error';
 import { UiBuilderPanelInterface } from './interfaces/ui-builder-panel.interface';
+import { TranslatorService } from '../../translator/translator.service';
+import { AvailableLanguagesEnum } from '../../translator/enums/available-languages.enum';
 
 export class UiBuilderUtil {
   private currentLanguageIso: string;
