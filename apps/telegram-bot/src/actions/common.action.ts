@@ -8,7 +8,7 @@ export class CommonAction {
     @Ctx() context: ContextInterface,
   ): Promise<void> {
     await context.removePreviousKeyboard();
-    const sceneName = context.update.callback_query.data.replace(
+    const sceneName: string = context.update.callback_query.data.replace(
       /BACK-TO:/g,
       '',
     );
@@ -20,7 +20,10 @@ export class CommonAction {
     @Ctx() context: ContextInterface,
   ): Promise<void> {
     await context.removePreviousKeyboard();
-    const sceneName = context.update.callback_query.data.replace(/OPEN:/g, '');
+    const sceneName: string = context.update.callback_query.data.replace(
+      /OPEN:/g,
+      '',
+    );
     await context.scene.enter(sceneName);
   }
 }

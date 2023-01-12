@@ -27,7 +27,7 @@ export class TranslatorService {
       );
       return text;
     } else {
-      throw new KeyValueNotFoundError(key);
+      throw new KeyValueNotFoundError();
     }
   }
 }

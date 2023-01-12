@@ -26,7 +26,8 @@ export class ConfigurationService {
       };
     }
 
-    const result = await this.configurationRepository.findOneByUserUuid(data);
+    const result: ConfigurationInterface =
+      await this.configurationRepository.findOneByUserUuid(data);
     if (!result) {
       return {
         ...result,

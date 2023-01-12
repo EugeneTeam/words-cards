@@ -1,6 +1,6 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { map, Observable, Subscription, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { ConfigurationRepositoryInterface } from './interfaces/configuration-repository.interface';
 import { ConfigurationInterface } from './interfaces/configuration.interface';

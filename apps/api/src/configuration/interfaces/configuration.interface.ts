@@ -3,5 +3,6 @@ export interface ConfigurationInterface {
   readonly userUuid: string;
   readonly defaultLanguageForNewWord: number;
   readonly defaultLanguageForWordTranslation: number;
+  readonly useDefaultLanguage?: boolean;
   readonly isNull?: boolean;
 }

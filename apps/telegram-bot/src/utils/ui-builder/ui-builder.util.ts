@@ -106,12 +106,17 @@ export class UiBuilderUtil {
     return this;
   }
 
-  public addTitle<DataInterface>(textOrTranslateKey: string): this {
+  public addTitle<DataInterface>(
+    textOrTranslateKey: string,
+    data?: DataInterface,
+  ): this {
     if (this.textInsteadKey) {
       this.panel.title = textOrTranslateKey;
     } else {
-      this.panel.title =
-        this.translatorService.getTranslate<DataInterface>(textOrTranslateKey);
+      this.panel.title = this.translatorService.getTranslate<DataInterface>(
+        textOrTranslateKey,
+        data,
+      );
     }
     return this;
   }

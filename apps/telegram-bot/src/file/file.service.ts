@@ -44,6 +44,7 @@ export class FileService implements OnModuleInit {
   }
 }
 
+// TODO
 // await this.bot.telegram.sendPhoto(
 //   TelegrafContext.getTelegramId(context),
 //   'AgACAgIAAxkDAAKqKmNibvP4JOJ6dRmnOO9MZrfvO8QSAALawTEbkLwQSyHEogIYI0ooAQADAgADcwADKgQ',

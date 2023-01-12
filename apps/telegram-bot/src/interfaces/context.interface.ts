@@ -10,4 +10,6 @@ export interface ContextInterface extends Context {
   removePreviousKeyboard(): Promise<void | never>;
   wizard: any;
   session: any;
+  isolation?: boolean;
+  message: any;
 }

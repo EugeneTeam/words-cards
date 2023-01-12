@@ -9,14 +9,12 @@ export class FileRepository implements FileRepositoryInterface<FileInterface> {
   constructor(@InjectModel() private readonly knex: Knex) {}
 
   public async getOneByName(name: string): Promise<FileInterface> {
-    const file: FileInterface = await this.knex<FileInterface>('files')
+    return this.knex<FileInterface>('files')
       .select()
       .where({
         name,
       })
       .first();
-
-    return file;
   }
 
   public async updateOneByName(
@@ -33,11 +31,9 @@ export class FileRepository implements FileRepositoryInterface<FileInterface> {
   }
 
   public async addOne(name: string, fileToken: string): Promise<FileInterface> {
-    const file: FileInterface = await this.knex<FileInterface>('files').insert({
+    return this.knex<FileInterface>('files').insert({
       name,
       fileToken,
     });
-
-    return file;
   }
 }

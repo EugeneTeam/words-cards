@@ -6,7 +6,7 @@ export const ReplyWithPhotoUtil = async (
   context: ContextInterface,
   title: string,
   ...paths
-) => {
+): Promise<void> => {
   await context.replyWithPhoto(
     {
       source: createReadStream(join(__dirname, ...paths)),

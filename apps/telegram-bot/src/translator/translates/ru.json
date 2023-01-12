@@ -12,6 +12,7 @@
   "back": "\uD83D\uDD19 Назад",
 
   "words-operation-title": "⚙ Управление словами",
+  "words-operation-add-word-short": "\uD83D\uDD8A Добавить слово (сокращенно)",
   "words-operation-add-word": "\uD83D\uDD8A Добавить слово",
   "words-operation-remove-word": "\uD83D\uDD8D Удалить слово",
   "words-operation-edit-word": "\uD83D\uDD8C Редактировать слово",
@@ -24,5 +25,12 @@
   "select-language-for-word": "На каком языке будете добавлять слово?",
   "select-translation-language": "Выберите язык перевода",
 
-  "user-action-expected": "Ожидается действие пользователя"
+  "user-action-expected": "Ожидается действие пользователя",
+
+  "add-word-short": "Для быстрого добавления слова используйте следующую шаблон сообщения:\n<b>слово - перевод, второй перевод, третий перевод...</b>",
+
+  "add-word-question": "Добавить слово в список?\n<b>Слово:</b> {{word}}\n<b>Перевод(ы):</b> {{translations}}",
+  "save": "➕ Сохранить",
+  "cancel": "➖ Отмена",
+  "add-word-short-invalid-pattern": "Некорректный шаблон.\nИспользуйте следующий шаблон:\n<b>слово - перевод, второй перевод, третий перевод...</b>\n\n<b>Например:</b> light - свет, освещение"
 }

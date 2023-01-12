@@ -33,6 +33,7 @@ export class ConfigurationRepository
       )
       .select('forTranslation.iso AS defaultLanguageForWordTranslation')
       .where('userUuid', data.uuid)
+      .select('Configurations.useDefaultLanguage')
       .first();
   }
 
