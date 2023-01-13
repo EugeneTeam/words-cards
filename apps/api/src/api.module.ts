@@ -8,6 +8,8 @@ import { ConfigModuleConfig } from '../../../common/config/config-module/config-
 import { FileModule } from './files/file.module';
 import { LanguageModule } from './language/language.module';
 import { ConfigurationModule } from './configuration/configuration.module';
+import { WordModule } from './word/word.module';
+import { TranslationModule } from './translation/translation.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { ConfigurationModule } from './configuration/configuration.module';
     FileModule,
     LanguageModule,
     ConfigurationModule,
+    WordModule,
+    TranslationModule,
   ],
 })
 export class ApiModule {}

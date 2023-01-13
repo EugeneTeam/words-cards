@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package proto;
+
+service WordService {
+  rpc CreateOneWord (NewWord) returns (Word);
+}
+
+message NewWord {
+  string word = 1;
+  optional string note = 2;
+  optional string categoryUuid = 3;
+  optional string userUuid = 4;
+}
+
+message Word {
+  string uuid = 1;
+  string word = 2;
+  optional string note = 3;
+  string originalLanguageUuid = 4;
+  optional string categoryUuid = 5;
+  string userUuid = 6;
+}

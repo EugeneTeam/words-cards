@@ -1,0 +1,1 @@
+export const WORD_REPOSITORY_KEY = Symbol('WORD_REPOSITORY_KEY');
