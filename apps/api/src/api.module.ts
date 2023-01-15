@@ -10,6 +10,7 @@ import { LanguageModule } from './language/language.module';
 import { ConfigurationModule } from './configuration/configuration.module';
 import { WordModule } from './word/word.module';
 import { TranslationModule } from './translation/translation.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TranslationModule } from './translation/translation.module';
     ConfigurationModule,
     WordModule,
     TranslationModule,
+    CategoryModule,
   ],
 })
 export class ApiModule {}

@@ -6,4 +6,5 @@ export const TABLES = {
   WORDS: 'Words',
   WORD_FILES: 'WordFiles',
   CONFIGURATION: 'Configurations',
+  CATEGORY: 'Categories',
 };
