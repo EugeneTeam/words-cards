@@ -2,7 +2,7 @@ export const TABLES = {
   LANGUAGES: 'Languages',
   USERS: 'Users',
   FILES: 'Files',
-  TRANSLATES: 'Translates',
+  TRANSLATIONS: 'Translations',
   WORDS: 'Words',
   WORD_FILES: 'WordFiles',
   CONFIGURATION: 'Configurations',

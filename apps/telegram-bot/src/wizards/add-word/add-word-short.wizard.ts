@@ -1,4 +1,4 @@
-import { Ctx, Wizard, WizardStep } from 'nestjs-telegraf';
+import { Action, Ctx, Wizard, WizardStep } from 'nestjs-telegraf';
 import { ConfigurationService } from '../../configuration/configuration.service';
 import { ContextInterface } from '../../interfaces/context.interface';
 import { ConfigurationInterface } from '../../configuration/interfaces/configuration.interface';
@@ -6,10 +6,15 @@ import { WizardUtilsExtend } from '../../extends/wizard-utils.extend';
 import { UiBuilderUtil } from '../../utils/ui-builder/ui-builder.util';
 import { UiBuilderPanelInterface } from '../../utils/ui-builder/interfaces/ui-builder-panel.interface';
 import { AddWordQuestion } from '../../translator/interfaces/add-word-question';
+import { WordService } from '../../word/word.service';
+import { StatusInterface } from '../../common/interfaces/status.interface';
 
 @Wizard('add-word-wizard-short')
 export class AddWordShortWizard extends WizardUtilsExtend {
-  constructor(private readonly configurationService: ConfigurationService) {
+  constructor(
+    private readonly configurationService: ConfigurationService,
+    private readonly wordService: WordService,
+  ) {
     super();
   }
 
@@ -69,8 +74,8 @@ export class AddWordShortWizard extends WizardUtilsExtend {
         ),
       )
       .useTitleKeyAsText(false)
-      .addButton('save', 'd', true)
-      .addButton('cancel', 'd', true)
+      .addButton('save', 'save', true)
+      .addButton('cancel', 'cancel', true)
       .build();
 
     await context.replyWithHTML(UI.title, UI.buttons);
@@ -79,4 +84,19 @@ export class AddWordShortWizard extends WizardUtilsExtend {
   }
   // TODO Add actions
   // TODO Save word to db
+  @Action('save')
+  public async save(@Ctx() context: ContextInterface): Promise<void> {
+    const word: string = context.wizard.state.word;
+    const translations: string[] = context.wizard.state.translations;
+
+    const result: StatusInterface = await this.wordService.create({
+      word: {
+        word,
+      },
+      userUuid: context.session.userUuid,
+      translations: {
+        translations,
+      },
+    });
+  }
 }

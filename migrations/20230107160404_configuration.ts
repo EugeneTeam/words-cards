@@ -18,8 +18,6 @@ export async function up(knex: Knex): Promise<void> {
       .foreign('defaultLanguageForWordTranslation')
       .references('uuid')
       .inTable('Languages');
-
-    table.boolean('useDefaultLanguage').nullable().defaultTo(false);
   });
 }
 

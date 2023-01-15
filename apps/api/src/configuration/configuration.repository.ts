@@ -17,24 +17,41 @@ export class ConfigurationRepository
   public async findOneByUserUuid(
     data: UuidInterface,
   ): Promise<ConfigurationInterface> {
-    return this.knex<ConfigurationInterface>(TABLES.CONFIGURATION)
+    const result = await this.knex<ConfigurationInterface>(TABLES.CONFIGURATION)
       .leftJoin(
-        'Languages AS forNewWord',
+        `${TABLES.LANGUAGES} AS forNewWord`,
         `${TABLES.CONFIGURATION}.defaultLanguageForNewWord`,
         '=',
         'forNewWord.uuid',
       )
-      .select('forNewWord.iso AS defaultLanguageForNewWord')
       .leftJoin(
-        'Languages AS forTranslation',
+        `${TABLES.LANGUAGES} AS forTranslation`,
         `${TABLES.CONFIGURATION}.defaultLanguageForWordTranslation`,
         '=',
         'forTranslation.uuid',
       )
-      .select('forTranslation.iso AS defaultLanguageForWordTranslation')
       .where('userUuid', data.uuid)
-      .select('Configurations.useDefaultLanguage')
+      .select(
+        `${TABLES.CONFIGURATION}.uuid AS uuid`,
+        `${TABLES.CONFIGURATION}.userUuid AS userUuid`,
+        'forNewWord.uuid AS wordDefaultUuid',
+        'forNewWord.name AS wordDefaultName',
+        'forTranslation.uuid AS translationDefaultUuid',
+        'forTranslation.name AS translationDefaultName',
+      )
       .first();
+    return {
+      uuid: result.uuid,
+      userUuid: result.userUuid,
+      defaultLanguageForNewWord: {
+        name: result.wordDefaultName,
+        uuid: result.wordDefaultUuid,
+      },
+      defaultLanguageForWordTranslation: {
+        name: result.translationDefaultName,
+        uuid: result.translationDefaultUuid,
+      },
+    };
   }
 
   public async create(

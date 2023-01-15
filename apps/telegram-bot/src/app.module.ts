@@ -11,6 +11,7 @@ import { ActionsModule } from './actions/actions.module';
 import { ScenesModule } from './scenes/scenes.module';
 import { WizardsModule } from './wizards/wizards.module';
 import { LanguageModule } from './language/language.module';
+import { WordModule } from './word/word.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { LanguageModule } from './language/language.module';
     ScenesModule,
     WizardsModule,
     LanguageModule,
+    WordModule,
   ],
   providers: [],
 })
