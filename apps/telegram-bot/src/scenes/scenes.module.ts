@@ -1,15 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MainMenuScene } from './main-menu/main-menu.scene';
-import { WordsMenuScene } from './words-menu/words-menu.scene';
-import { WordMenuOperationScene } from './words-menu/word-menu-operation.scene';
 import { StartScene } from './start.scene';
+import { WordMenuScene } from './word/word-menu.scene';
+import { CategoryMenuScene } from './category/category-menu.scene';
 
 @Module({
-  providers: [
-    MainMenuScene,
-    WordsMenuScene,
-    WordMenuOperationScene,
-    StartScene,
-  ],
+  providers: [MainMenuScene, WordMenuScene, StartScene, CategoryMenuScene],
 })
 export class ScenesModule {}

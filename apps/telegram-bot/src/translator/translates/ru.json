@@ -1,23 +1,38 @@
 {
   "welcome": "Добро пожаловать, {{username}}",
-  "main-menu-title": "Главное меню",
-  "main-menu-buttons-words": "Ⓜ Меню слов",
-  "main-menu-buttons-setting": "\uD83D\uDEE0 Настройки",
-  "main-menu-buttons-statistic": "\uD83D\uDCCA Статистика",
-  "words-menu-repeat-words": "\uD83D\uDD01 Повторить слова",
-  "words-menu-learn-words": "\uD83C\uDF93 Учить новые слова",
-  "words-menu-manage-word-list": "⚙ Управлять списком слов",
-  "words-menu-manage-category-list": "⚙ Управлять списком категорий",
+  "main-menu:title": "Главное меню",
+
+  "main-menu:words": "Ⓜ Меню слов",
+  "main-menu:setting": "\uD83D\uDEE0 Настройки",
+  "main-menu:statistic": "\uD83D\uDCCA Статистика",
+  "main-menu:categories": "\uD83D\uDCD1 Категории",
+  "main-menu:repeat": "\uD83D\uDD01 Повторить слова",
+  "main-menu:learn": "\uD83C\uDF93 Учить новые слова",
+
+
+  "words-menu:title": "Ⓜ Меню слов",
+  "words-menu:manage-words": "⚙ Управлять списком слов",
+
+  "add-word-short": "Для быстрого добавления слова используйте следующую шаблон сообщения:\n<b>слово - перевод, второй перевод, третий перевод...</b>",
+  "add-word-short-invalid-pattern": "Некорректный шаблон.\nИспользуйте следующий шаблон:\n<b>слово - перевод, второй перевод, третий перевод...</b>\n\n<b>Например:</b> light - свет, освещение",
+  "add-word-question": "Добавить слово в список?\n<b>Слово:</b> {{word}}\n<b>Перевод(ы):</b> {{translations}}",
+
+
+  "categories-menu:title": "⚙ Меню категорий",
+  "categories-menu:add": "\uD83D\uDD8A Добавить категорию(категории)",
+  "categories-menu:remove": "\uD83D\uDD8D Удалить категорию",
+  "categories-menu:update": "\uD83D\uDD8C Редактировать категорию",
+  "categories-menu:list": "\uD83D\uDCDC Список категорий",
 
   "back": "\uD83D\uDD19 Назад",
 
-  "words-operation-title": "⚙ Управление словами",
-  "words-operation-add-word-short": "\uD83D\uDD8A Добавить слово (сокращенно)",
-  "words-operation-add-word": "\uD83D\uDD8A Добавить слово",
-  "words-operation-remove-word": "\uD83D\uDD8D Удалить слово",
-  "words-operation-edit-word": "\uD83D\uDD8C Редактировать слово",
-  "words-operation-view-list": "\uD83D\uDCDC Список слов",
-  "words-operation-upload-file": "\uD83D\uDCE5 Загрузить файл коллекцию",
+  "manage-words:title": "⚙ Меню слов",
+  "manage-words:add-short": "\uD83D\uDD8A Добавить слово (сокращенно)",
+  "manage-words:add": "\uD83D\uDD8A Добавить слово",
+  "manage-words:remove": "\uD83D\uDD8D Удалить слово",
+  "manage-words:update": "\uD83D\uDD8C Редактировать слово",
+  "manage-words:list": "\uD83D\uDCDC Список слов",
+  "manage-words:upload-file": "\uD83D\uDCE5 Загрузить файл коллекцию",
 
   "enter-word": "Введите слово",
   "unavailable-symbol": "Unavailable symbol",
@@ -27,10 +42,10 @@
 
   "user-action-expected": "Ожидается действие пользователя",
 
-  "add-word-short": "Для быстрого добавления слова используйте следующую шаблон сообщения:\n<b>слово - перевод, второй перевод, третий перевод...</b>",
 
-  "add-word-question": "Добавить слово в список?\n<b>Слово:</b> {{word}}\n<b>Перевод(ы):</b> {{translations}}",
+
   "save": "➕ Сохранить",
   "cancel": "➖ Отмена",
-  "add-word-short-invalid-pattern": "Некорректный шаблон.\nИспользуйте следующий шаблон:\n<b>слово - перевод, второй перевод, третий перевод...</b>\n\n<b>Например:</b> light - свет, освещение"
+
+  "add-category-info": "Добавляйте категории как по одной так и целым списком.\nДля добавлений одной категории просто отправьте название категории как сообщение.\n\n<b>Например:</b>\n⛳Спорт\n\nДля добавления списка категорий соответственной отправьте список как сообщение.\n\n<b>Например:</b>\n⛳Спорт\n\uD83D\uDCD8Неправильные глаголы\n\uD83D\uDD4DАрхитектура\n\uD83D\uDCBCБизнес"
 }

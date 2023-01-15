@@ -2,7 +2,6 @@ import { AvailableLanguagesEnum } from './enums/available-languages.enum';
 
 import * as RU from './translates/ru.json';
 import * as UA from './translates/ua.json';
-import { KeyValueNotFoundError } from './errors/key-value-not-found.error';
 
 const availableTranslations: Record<string, Record<string, string>> = {
   RU,
@@ -27,7 +26,7 @@ export class TranslatorService {
       );
       return text;
     } else {
-      throw new KeyValueNotFoundError();
+      throw new Error(`Key: ${key} not found`);
     }
   }
 }

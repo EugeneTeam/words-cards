@@ -9,7 +9,7 @@ import { AddWordQuestion } from '../../translator/interfaces/add-word-question';
 import { WordService } from '../../word/word.service';
 import { StatusInterface } from '../../common/interfaces/status.interface';
 
-@Wizard('add-word-wizard-short')
+@Wizard('add-word-short-wizard')
 export class AddWordShortWizard extends WizardUtilsExtend {
   constructor(
     private readonly configurationService: ConfigurationService,
@@ -44,9 +44,7 @@ export class AddWordShortWizard extends WizardUtilsExtend {
       !/^[a-zA-Zа-яА-Я]+[ ]\-[ ]([a-zA-Zа-яА-Я]+((, )|(,))?)+/.test(pattern)
     ) {
       await context.replyWithHTML(
-        context.translatorService.getTranslate(
-          'add-word-short-invalid-pattern',
-        ),
+        context.translatorService.getTranslate('word-short-invalid-pattern'),
       );
       return;
     }
@@ -82,13 +80,13 @@ export class AddWordShortWizard extends WizardUtilsExtend {
 
     await context.wizard.next();
   }
-  // TODO Add actions
-  // TODO Save word to db
+
   @Action('save')
   public async save(@Ctx() context: ContextInterface): Promise<void> {
     const word: string = context.wizard.state.word;
     const translations: string[] = context.wizard.state.translations;
 
+    // TODO Add category selection
     const result: StatusInterface = await this.wordService.create({
       word: {
         word,

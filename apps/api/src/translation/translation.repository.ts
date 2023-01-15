@@ -25,8 +25,6 @@ export class TranslationRepository
       originalLanguageUuid: data.originalLanguageUuid,
     }));
 
-    console.log(normalizeList);
-
     return this.knex<TranslationInterface>(TABLES.TRANSLATIONS)
       .transacting(transaction)
       .insert(normalizeList)

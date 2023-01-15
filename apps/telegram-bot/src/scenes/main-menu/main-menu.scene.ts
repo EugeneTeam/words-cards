@@ -12,10 +12,13 @@ export class MainMenuScene {
     )
       .useInlineKeyboardMethod()
       .addNewButtonLine()
-      .addTitle('main-menu-title')
-      .addButton('main-menu-buttons-words', 'OPEN:words-menu-scene', true)
-      .addButton('main-menu-buttons-setting', 'test-action-setting', true)
-      .addButton('main-menu-buttons-statistic', 'callback', true)
+      .addTitle('main-menu:title')
+      .addButton('main-menu:repeat', 'callback', true)
+      .addButton('main-menu:learn', 'callback', true)
+      .addButton('main-menu:words', 'OPEN:word-menu-scene', true)
+      .addButton('main-menu:categories', 'OPEN:category-menu-scene', true)
+      .addButton('main-menu:setting', 'test-action-setting', true)
+      .addButton('main-menu:statistic', 'callback', true)
       .build();
 
     await context.replyWithHTML(builder.title, builder.buttons);

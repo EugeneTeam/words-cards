@@ -3,8 +3,8 @@ import { ContextInterface } from '../../interfaces/context.interface';
 import { UiBuilderUtil } from '../../utils/ui-builder/ui-builder.util';
 import { UiBuilderPanelInterface } from '../../utils/ui-builder/interfaces/ui-builder-panel.interface';
 
-@Scene('words-menu-scene')
-export class WordsMenuScene {
+@Scene('category-menu-scene')
+export class CategoryMenuScene {
   @SceneEnter()
   public async sceneEnter(@Ctx() context: ContextInterface): Promise<void> {
     await context.removePreviousKeyboard();
@@ -13,15 +13,11 @@ export class WordsMenuScene {
     )
       .useInlineKeyboardMethod()
       .addNewButtonLine()
-      .addTitle('main-menu-buttons-words')
-      .addButton('words-menu-repeat-words', 'callback', true)
-      .addButton('words-menu-learn-words', 'callback', true)
-      .addButton(
-        'words-menu-manage-word-list',
-        'OPEN:words-menu-operation-scene',
-        true,
-      )
-      .addButton('words-menu-manage-category-list', 'callback', true)
+      .addTitle('categories-menu:title')
+      .addButton('categories-menu:add', 'callback', true)
+      .addButton('categories-menu:remove', 'callback', true)
+      .addButton('categories-menu:update', 'OPEN:manage-words-scene', true)
+      .addButton('categories-menu:list', 'OPEN:manage-words-scene', true)
       .addBackButton('main-menu-scene')
       .build();
 
