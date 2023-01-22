@@ -8,7 +8,7 @@ export async function up(knex: Knex): Promise<void> {
     table.uuid('userUuid');
     table.foreign('userUuid').references('uuid').inTable('Users');
 
-    table.primary(['userUuid', 'name']);
+    table.unique(['userUuid', 'name']);
   });
 }
 

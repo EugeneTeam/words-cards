@@ -4,3 +4,4 @@ import "configuration.proto";
 import "common.proto";
 import "language.proto";
 import "word.proto";
+import "category.proto";

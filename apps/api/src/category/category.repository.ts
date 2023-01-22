@@ -4,6 +4,7 @@ import { InjectModel } from 'nest-knexjs';
 import { Knex } from 'knex';
 import { TABLES } from '../../../../common/constants/tables-names.constant';
 import { CategoryInterface } from './interfaces/category.interface';
+import { AddCategoryInterface } from './interfaces/add-category.interface';
 
 @Injectable()
 export class CategoryRepository
@@ -11,11 +12,20 @@ export class CategoryRepository
 {
   constructor(@InjectModel() private readonly knex: Knex<CategoryInterface>) {}
 
-  public async createOneCategory(data: any): Promise<CategoryInterface> {
-    const result = await this.knex<CategoryInterface>(TABLES.CATEGORY).insert(
-      data,
-      '*',
-    );
-    return result[0];
+  public async createCategories(
+    data: AddCategoryInterface,
+  ): Promise<CategoryInterface[]> {
+    const normalizedList = data.categories.map((category) => {
+      return {
+        name: category,
+        userUuid: data.userUuid,
+      };
+    });
+
+    return this.knex<CategoryInterface>(TABLES.CATEGORY)
+      .insert(normalizedList)
+      .onConflict(['userUuid', 'name'])
+      .ignore()
+      .returning('*');
   }
 }

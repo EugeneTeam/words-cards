@@ -12,6 +12,7 @@ import { ScenesModule } from './scenes/scenes.module';
 import { WizardsModule } from './wizards/wizards.module';
 import { LanguageModule } from './language/language.module';
 import { WordModule } from './word/word.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { WordModule } from './word/word.module';
     WizardsModule,
     LanguageModule,
     WordModule,
+    CategoryModule,
   ],
   providers: [],
 })

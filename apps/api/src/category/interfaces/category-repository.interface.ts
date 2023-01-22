@@ -1,4 +1,5 @@
+import { AddCategoryInterface } from './add-category.interface';
+
 export interface CategoryRepositoryInterface<Category> {
-  // TODO any
-  createOneCategory(data: any): Promise<Category>;
+  createCategories(data: AddCategoryInterface): Promise<Category[]>;
 }

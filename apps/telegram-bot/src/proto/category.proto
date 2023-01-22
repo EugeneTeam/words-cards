@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package proto;
+
+import "common.proto";
+
+service CategoryService {
+  rpc CreateCategories (CategoryInputData) returns (AddCategoryResponse);
+}
+
+message CategoryInputData {
+  repeated string categories = 1;
+  string userUuid = 2;
+}
+
+message AddCategoryResponse {
+  repeated string addedCategories = 1;
+  repeated string skippedCategories = 2;
+}
+
