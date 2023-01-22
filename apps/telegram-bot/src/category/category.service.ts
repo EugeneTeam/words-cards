@@ -8,6 +8,8 @@ import { PACKAGE_NAME } from '../config/grpc/grpc.constants';
 import { CategoryInterface } from './interfaces/category.interface';
 import { AddCategoryInterface } from './interfaces/add-category.interface';
 import { AddCategoriesResponseInterface } from './interfaces/add-categories-response.interface';
+import { RowsAndCountInterface } from '../../../../common/interfaces/rows-and-count.interface';
+import { GetCategoriesListAndCountInterface } from './interfaces/get-categories-list-and-count.interface';
 
 @Injectable()
 export class CategoryService implements OnModuleInit {
@@ -28,6 +30,16 @@ export class CategoryService implements OnModuleInit {
     const observable: Observable<AddCategoriesResponseInterface> =
       await this.categoryService.createCategories(data);
     return getDataFromObservableUtil<AddCategoriesResponseInterface>(
+      observable,
+    );
+  }
+
+  public async findAllCategoriesAndCountByUserUuid(
+    data: GetCategoriesListAndCountInterface,
+  ): Promise<RowsAndCountInterface<CategoryInterface>> {
+    const observable: Observable<RowsAndCountInterface<CategoryInterface>> =
+      await this.categoryService.findAllCategoriesAndCountByUserUuid(data);
+    return getDataFromObservableUtil<RowsAndCountInterface<CategoryInterface>>(
       observable,
     );
   }

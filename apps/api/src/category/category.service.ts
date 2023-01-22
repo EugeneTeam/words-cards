@@ -4,6 +4,8 @@ import { CategoryRepositoryInterface } from './interfaces/category-repository.in
 import { CategoryInterface } from './interfaces/category.interface';
 import { AddCategoryInterface } from './interfaces/add-category.interface';
 import { AddCategoriesResponseInterface } from './interfaces/add-categories-response.interface';
+import { PaginationInterface } from '../../../../common/interfaces/pagination.interface';
+import { RowsAndCountInterface } from '../../../../common/interfaces/rows-and-count.interface';
 
 @Injectable()
 export class CategoryService {
@@ -36,5 +38,15 @@ export class CategoryService {
       addedCategories,
       skippedCategories,
     };
+  }
+
+  public async findAllCategoriesAndCountByUserUuid(
+    userUuid: string,
+    pagination?: PaginationInterface,
+  ): Promise<RowsAndCountInterface<CategoryInterface>> {
+    return this.categoryRepository.findAllCategoriesAndCountByUserUuid(
+      userUuid,
+      pagination,
+    );
   }
 }

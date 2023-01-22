@@ -6,6 +6,7 @@ import "common.proto";
 
 service CategoryService {
   rpc CreateCategories (CategoryInputData) returns (AddCategoryResponse);
+  rpc FindAllCategoriesAndCountByUserUuid (UserUuidAndPagination) returns (CategoriesAndCount);
 }
 
 message CategoryInputData {
@@ -18,3 +19,13 @@ message AddCategoryResponse {
   repeated string skippedCategories = 2;
 }
 
+message CategoriesAndCount {
+  repeated Category rows = 1;
+  int64 count = 2;
+}
+
+message Category {
+  string uuid = 1;
+  string name = 2;
+  string userUuid = 3;
+}

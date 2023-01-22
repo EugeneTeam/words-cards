@@ -17,7 +17,7 @@ export class CategoryMenuScene {
       .addButton('categories-menu:add', 'OPEN:add-category-wizard', true)
       .addButton('categories-menu:remove', 'callback', true)
       .addButton('categories-menu:update', 'callback', true)
-      .addButton('categories-menu:list', 'callback', true)
+      .addButton('categories-menu:list', 'OPEN:categories-list-scene', true)
       .addBackButton('main-menu-scene')
       .build();
 
