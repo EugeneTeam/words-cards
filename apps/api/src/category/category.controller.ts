@@ -6,10 +6,19 @@ import { AddCategoriesResponseInterface } from './interfaces/add-categories-resp
 import { RowsAndCountInterface } from '../../../../common/interfaces/rows-and-count.interface';
 import { CategoryInterface } from './interfaces/category.interface';
 import { GetCategoriesListAndCountInterface } from './interfaces/get-categories-list-and-count.interface';
+import { UuidInterface } from '../../../../common/interfaces/uuid.interface';
+import { CategoryInfoInterface } from './interfaces/category-info.interface';
 
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
+
+  @GrpcMethod('CategoryService', 'FindCategoryInfoByUuid')
+  public async findCategoryInfoByUuid(
+    data: UuidInterface,
+  ): Promise<CategoryInfoInterface> {
+    return this.categoryService.findCategoryInfoByUuid(data);
+  }
 
   @GrpcMethod('CategoryService', 'CreateCategories')
   async createCategories(

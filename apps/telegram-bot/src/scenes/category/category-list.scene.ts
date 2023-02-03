@@ -24,6 +24,7 @@ export class CategoryListScene {
     const builder = new UiBuilderUtil(context.languageIso)
       .useInlineKeyboardMethod()
       .addNewButtonLine()
+      .addTitle('category-list')
       .useTitleKeyAsText(true);
 
     for (const category of categories?.rows) {
@@ -32,8 +33,6 @@ export class CategoryListScene {
 
     const result = builder.build();
 
-    // TODO add title to builder
-    // TODO add handler to buttons
-    await context.reply('list', result.buttons);
+    await context.reply(result.title, result.buttons);
   }
 }

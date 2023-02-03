@@ -17,3 +17,7 @@ message UserUuidAndPagination {
   string userUuid = 1;
   optional Pagination pagination = 2;
 }
+
+message Uuid {
+  string uuid = 1;
+}

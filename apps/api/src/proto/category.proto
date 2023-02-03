@@ -7,6 +7,12 @@ import "common.proto";
 service CategoryService {
   rpc CreateCategories (CategoryInputData) returns (AddCategoryResponse);
   rpc FindAllCategoriesAndCountByUserUuid (UserUuidAndPagination) returns (CategoriesAndCount);
+  rpc FindCategoryInfoByUuid (Uuid) returns (CategoryInfo);
+}
+
+message CategoryInfo {
+  Category category = 1;
+  int64 wordsInCategory = 2;
 }
 
 message CategoryInputData {

@@ -27,6 +27,8 @@
   "add-category-response": "<b>Добавлено новых категорий:</b>\n{{addedCategories}}\n\n<b>Дубликаты категорий:</b>\n{{skippedCategories}}",
   "add-category-duplicate-not-found": "⚠️Дубликатов не обнаружено!",
   "add-category-new-category-not-added": "⚠️Новых категорий не добавлено!",
+  "category-info": "<b>Категория</b>: {{category}}\n<b>Слов в категории</b>: {{wordsInCategory}}",
+  "category-list": "Спмсок категорий",
 
   "back": "\uD83D\uDD19 Назад",
 
@@ -49,5 +51,7 @@
 
 
   "save": "➕ Сохранить",
-  "cancel": "➖ Отмена"
+  "cancel": "➖ Отмена",
+  "remove": "\uD83D\uDD8D Удалить",
+  "edit": "\uD83D\uDD8C Редактировать"
 }

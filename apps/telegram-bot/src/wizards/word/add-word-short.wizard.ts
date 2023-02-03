@@ -5,7 +5,7 @@ import { ConfigurationInterface } from '../../configuration/interfaces/configura
 import { WizardUtilsExtend } from '../../extends/wizard-utils.extend';
 import { UiBuilderUtil } from '../../utils/ui-builder/ui-builder.util';
 import { UiBuilderPanelInterface } from '../../utils/ui-builder/interfaces/ui-builder-panel.interface';
-import { AddWordQuestion } from '../../translator/interfaces/add-word-question';
+import { AddWordQuestionInterface } from '../../translator/interfaces/add-word-question.interface';
 import { WordService } from '../../word/word.service';
 import { StatusInterface } from '../../common/interfaces/status.interface';
 
@@ -63,7 +63,7 @@ export class AddWordShortWizard extends WizardUtilsExtend {
       .addNewButtonLine()
       .useTitleKeyAsText(true)
       .addTitle(
-        context.translatorService.getTranslate<AddWordQuestion>(
+        context.translatorService.getTranslate<AddWordQuestionInterface>(
           'add-word-question',
           {
             word,

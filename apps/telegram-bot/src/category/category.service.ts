@@ -10,6 +10,7 @@ import { AddCategoryInterface } from './interfaces/add-category.interface';
 import { AddCategoriesResponseInterface } from './interfaces/add-categories-response.interface';
 import { RowsAndCountInterface } from '../../../../common/interfaces/rows-and-count.interface';
 import { GetCategoriesListAndCountInterface } from './interfaces/get-categories-list-and-count.interface';
+import { CategoryInfoInterface } from './interfaces/category-info.interface';
 
 @Injectable()
 export class CategoryService implements OnModuleInit {
@@ -22,6 +23,16 @@ export class CategoryService implements OnModuleInit {
       this.client.getService<CategoryRepositoryInterface<CategoryInterface>>(
         'CategoryService',
       );
+  }
+
+  public async findCategoryInfoByUuid(
+    categoryUuid: string,
+  ): Promise<CategoryInfoInterface> {
+    const observable: Observable<CategoryInfoInterface> =
+      await this.categoryService.findCategoryInfoByUuid({
+        uuid: categoryUuid,
+      });
+    return getDataFromObservableUtil<CategoryInfoInterface>(observable);
   }
 
   public async createOneCategory(

@@ -5,6 +5,7 @@ import { WordMenuScene } from './word/word-menu.scene';
 import { CategoryMenuScene } from './category/category-menu.scene';
 import { CategoryListScene } from './category/category-list.scene';
 import { CategoryModule } from '../category/category.module';
+import { CategoryInfoScene } from './category/category-info.scene';
 
 @Module({
   imports: [CategoryModule],
@@ -14,6 +15,7 @@ import { CategoryModule } from '../category/category.module';
     StartScene,
     CategoryMenuScene,
     CategoryListScene,
+    CategoryInfoScene,
   ],
 })
 export class ScenesModule {}
