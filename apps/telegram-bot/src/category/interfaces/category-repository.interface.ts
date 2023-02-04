@@ -5,6 +5,8 @@ import { RowsAndCountInterface } from '../../../../../common/interfaces/rows-and
 import { GetCategoriesListAndCountInterface } from './get-categories-list-and-count.interface';
 import { UuidInterface } from '../../../../../common/interfaces/uuid.interface';
 import { CategoryInfoInterface } from './category-info.interface';
+import { StatusInterface } from '../../common/interfaces/status.interface';
+import { UpdateCategoryInterface } from './update-category.interface';
 
 export interface CategoryRepositoryInterface<Category> {
   createCategories(
@@ -16,4 +18,6 @@ export interface CategoryRepositoryInterface<Category> {
   findCategoryInfoByUuid(
     data: UuidInterface,
   ): Observable<CategoryInfoInterface>;
+  removeCategoryByUuid(data: UuidInterface): Observable<StatusInterface>;
+  updateCategory(data: UpdateCategoryInterface): Observable<StatusInterface>;
 }

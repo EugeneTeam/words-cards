@@ -13,11 +13,14 @@ import { WizardsModule } from './wizards/wizards.module';
 import { LanguageModule } from './language/language.module';
 import { WordModule } from './word/word.module';
 import { CategoryModule } from './category/category.module';
+import { UserService } from './user/user.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot(ConfigModuleConfig),
     TelegrafModule.forRootAsync({
+      imports: [UserModule],
+      inject: [UserService],
       useClass: TelegramConfig,
     }),
     UserModule,

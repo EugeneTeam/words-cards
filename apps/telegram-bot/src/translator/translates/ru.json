@@ -19,8 +19,6 @@
 
   "categories-menu:title": "⚙ Меню категорий",
   "categories-menu:add": "\uD83D\uDD8A Добавить категорию(категории)",
-  "categories-menu:remove": "\uD83D\uDD8D Удалить категорию",
-  "categories-menu:update": "\uD83D\uDD8C Редактировать категорию",
   "categories-menu:list": "\uD83D\uDCDC Список категорий",
   "add-category-info": "Добавляйте категории как по одной так и целым списком.\nДля добавлений одной категории просто отправьте название категории как сообщение.\n\n<b>Например:</b>\n⛳Спорт\n\nДля добавления списка категорий соответственной отправьте список как сообщение.\n\n<b>Например:</b>\n⛳Спорт\n\uD83D\uDCD8Неправильные глаголы\n\uD83D\uDD4DАрхитектура\n\uD83D\uDCBCБизнес",
   "add-category-question": "<b>Добавить категорию(и)?</b>\n{{categories}}",
@@ -28,7 +26,12 @@
   "add-category-duplicate-not-found": "⚠️Дубликатов не обнаружено!",
   "add-category-new-category-not-added": "⚠️Новых категорий не добавлено!",
   "category-info": "<b>Категория</b>: {{category}}\n<b>Слов в категории</b>: {{wordsInCategory}}",
-  "category-list": "Спмсок категорий",
+  "category-list": "Список категорий",
+  "category-remove": "Подтвердить удаление категории?\n<b>Категория</b>: {{category}}",
+  "category-deleted": "Категория удалена",
+  "category-enter-name": "Введите новое название для категории",
+  "category-new-name": "Изменить название категории с \"<b>{{oldCategory}}</b>\" на \"<b>{{newCategory}}</b>\"?",
+  "category-updated": "Категория обновлена",
 
   "back": "\uD83D\uDD19 Назад",
 
@@ -49,9 +52,12 @@
 
   "user-action-expected": "Ожидается действие пользователя",
 
+  "something-went-wrong": "Что-то пошло не так. Попробуйте поздже",
 
   "save": "➕ Сохранить",
   "cancel": "➖ Отмена",
   "remove": "\uD83D\uDD8D Удалить",
-  "edit": "\uD83D\uDD8C Редактировать"
+  "edit": "\uD83D\uDD8C Редактировать",
+  "accept": "✅ Подтвердить",
+  "cancel-checkmark": "☑️ Отмена"
 }

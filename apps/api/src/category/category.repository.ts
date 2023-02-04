@@ -14,6 +14,9 @@ import { RowsAndCountInterface } from '../../../../common/interfaces/rows-and-co
 import { UuidInterface } from '../../../../common/interfaces/uuid.interface';
 import { WordInterface } from '../word/interfaces/word.interface';
 import { CategoryInfoInterface } from './interfaces/category-info.interface';
+import { StatusInterface } from '../common/interfaces/status.interface';
+import Transaction = Knex.Transaction;
+import { UpdateCategoryInterface } from './interfaces/update-category.interface';
 
 @Injectable()
 export class CategoryRepository
@@ -21,13 +24,40 @@ export class CategoryRepository
 {
   constructor(@InjectModel() private readonly knex: Knex<CategoryInterface>) {}
 
+  public async updateCategory(
+    data: UpdateCategoryInterface,
+  ): Promise<StatusInterface> {
+    await this.knex(TABLES.CATEGORY)
+      .where('uuid', data.uuid)
+      .update({ name: data.name });
+
+    return {
+      status: true,
+    };
+  }
+  public async removeCategoryByUuid(
+    data: UuidInterface,
+  ): Promise<StatusInterface> {
+    return this.knex.transaction(async (transaction: Transaction) => {
+      await this.knex<WordInterface>(TABLES.WORDS)
+        .where('categoryUuid', data.uuid)
+        .transacting(transaction)
+        .update({ categoryUuid: null });
+
+      await this.knex(TABLES.CATEGORY)
+        .transacting(transaction)
+        .del()
+        .where('uuid', data.uuid);
+
+      return {
+        status: true,
+      };
+    });
+  }
+
   public async findCategoryInfoByUuid(
     data: UuidInterface,
   ): Promise<CategoryInfoInterface> {
-    console.log();
-    console.log();
-    console.log();
-    console.log(data);
     const category: CategoryInterface = await this.knex(TABLES.CATEGORY)
       .where({ uuid: data.uuid })
       .first();
@@ -38,10 +68,6 @@ export class CategoryRepository
       })
       .count();
 
-    console.log({
-      category,
-      wordsInCategory: wordsCount[0].count,
-    });
     return {
       category,
       wordsInCategory: wordsCount[0].count,
@@ -69,27 +95,28 @@ export class CategoryRepository
     userUuid: string,
     pagination: PaginationInterface | null = null,
   ): Promise<RowsAndCountInterface<CategoryInterface>> {
-    console.log(1);
     const limit: number = pagination?.limit ? pagination.limit : DEFAULT_LIMIT;
-    console.log(2);
+
     const offset: number = pagination?.offset
       ? pagination.offset
       : DEFAULT_OFFSET;
-    console.log(3);
+
     const rows: CategoryInterface[] = await this.knex<CategoryInterface>(
       TABLES.CATEGORY,
     )
       .where('userUuid', userUuid)
       .limit(limit)
       .offset(offset);
-    console.log(4);
+
     const count = await this.knex<CategoryInterface>(TABLES.CATEGORY)
       .where('userUuid', userUuid)
       .count();
-    console.log(5);
+
     return {
       rows,
-      count: Number(count),
+      count: Number(count[0].count),
+      currentPage: offset / limit + 1,
+      maxPage: Math.ceil(Number(count[0].count) / limit),
     };
   }
 }

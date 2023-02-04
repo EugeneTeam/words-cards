@@ -7,6 +7,7 @@ import { UserRepositoryInterface } from './interfaces/user-repository.interface'
 import { InsertUserInterface } from './interfaces/insert-user.interface';
 import { PACKAGE_NAME } from '../config/grpc/grpc.constants';
 import { UserInterface } from './interfaces/user.interface';
+import { TelegramIdInterface } from '../../../../common/interfaces/telegramId.interface';
 
 @Injectable()
 export class UserService implements OnModuleInit {
@@ -19,6 +20,14 @@ export class UserService implements OnModuleInit {
       this.client.getService<UserRepositoryInterface<UserInterface>>(
         'UserService',
       );
+  }
+
+  public async findUserByTelegramId(
+    data: TelegramIdInterface,
+  ): Promise<UserInterface> {
+    const observable: Observable<UserInterface> =
+      await this.userService.findUserByTelegramId(data);
+    return getDataFromObservableUtil<UserInterface>(observable);
   }
 
   public async insertOne(data: InsertUserInterface): Promise<UserInterface> {

@@ -1,3 +1,3 @@
 export interface UuidInterface {
-  uuid: string;
+  readonly uuid: string;
 }

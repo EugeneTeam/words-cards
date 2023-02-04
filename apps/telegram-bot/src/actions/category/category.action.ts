@@ -6,6 +6,23 @@ import { CategoryService } from '../../category/category.service';
 export class CategoryAction {
   constructor(private readonly categoryService: CategoryService) {}
 
+  @Action(/^PAGINATION-CATEGORY:[0-9a-z\-]+:[0-9]+:[0-9]+$/)
+  public async pagination(@Ctx() context: ContextInterface): Promise<void> {
+    const data: string[] = context.update.callback_query.data.split(':');
+    const scene: string = data[1];
+    const limit = Number(data[2]);
+    const offset = Number(data[3]);
+
+    if (limit > 0) {
+      await context.scene.enter(scene, {
+        limit,
+        offset,
+      });
+    } else {
+      return;
+    }
+  }
+
   @Action(/^CATEGORY:[0-9a-z-]+$/)
   public async openCategoryInfo(
     @Ctx() context: ContextInterface,
@@ -19,7 +36,7 @@ export class CategoryAction {
 
     await context.removePreviousKeyboard();
 
-    await context.scene.enter('categories-info-scene', {
+    await context.scene.enter('categories-info-wizard', {
       category: info.category.name,
       wordsInCategory: Number(info.wordsInCategory),
       categoryUuid: info.category.uuid,

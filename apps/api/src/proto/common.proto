@@ -21,3 +21,7 @@ message UserUuidAndPagination {
 message Uuid {
   string uuid = 1;
 }
+
+message TelegramId {
+  string telegramId = 1;
+}

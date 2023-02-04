@@ -8,6 +8,8 @@ import { PaginationInterface } from '../../../../common/interfaces/pagination.in
 import { RowsAndCountInterface } from '../../../../common/interfaces/rows-and-count.interface';
 import { UuidInterface } from '../../../../common/interfaces/uuid.interface';
 import { CategoryInfoInterface } from './interfaces/category-info.interface';
+import { StatusInterface } from '../common/interfaces/status.interface';
+import { UpdateCategoryInterface } from './interfaces/update-category.interface';
 
 @Injectable()
 export class CategoryService {
@@ -15,6 +17,18 @@ export class CategoryService {
     @Inject(CATEGORY_REPOSITORY_TOKEN)
     private readonly categoryRepository: CategoryRepositoryInterface<CategoryInterface>,
   ) {}
+
+  public async updateCategory(
+    data: UpdateCategoryInterface,
+  ): Promise<StatusInterface> {
+    return this.categoryRepository.updateCategory(data);
+  }
+
+  public async removeCategoryByUuid(
+    data: UuidInterface,
+  ): Promise<StatusInterface> {
+    return this.categoryRepository.removeCategoryByUuid(data);
+  }
 
   public async findCategoryInfoByUuid(
     data: UuidInterface,

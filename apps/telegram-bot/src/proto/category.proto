@@ -8,6 +8,13 @@ service CategoryService {
   rpc CreateCategories (CategoryInputData) returns (AddCategoryResponse);
   rpc FindAllCategoriesAndCountByUserUuid (UserUuidAndPagination) returns (CategoriesAndCount);
   rpc FindCategoryInfoByUuid (Uuid) returns (CategoryInfo);
+  rpc RemoveCategoryByUuid (Uuid) returns (Status);
+  rpc UpdateCategory (UpdateCategoryInputData) returns (Status);
+}
+
+message UpdateCategoryInputData {
+  string uuid = 1;
+  string name = 2;
 }
 
 message CategoryInfo {
@@ -28,6 +35,8 @@ message AddCategoryResponse {
 message CategoriesAndCount {
   repeated Category rows = 1;
   int64 count = 2;
+  int64 currentPage = 3;
+  int64 maxPage = 4;
 }
 
 message Category {

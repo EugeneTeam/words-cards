@@ -76,8 +76,25 @@ export class UiBuilderUtil {
     return this;
   }
 
+  public addBackButtonForWizard(callback: string): this {
+    if (this.textInsteadKey) {
+      this.useTitleKeyAsText(false)
+        .addButton('back', callback)
+        .useTitleKeyAsText(true);
+    } else {
+      this.addButton('back', callback);
+    }
+    return this;
+  }
+
   public addBackButton(sceneName: string): this {
-    this.addButton('back', `BACK-TO:${sceneName}`);
+    if (this.textInsteadKey) {
+      this.useTitleKeyAsText(false)
+        .addButton('back', `BACK-TO:${sceneName}`)
+        .useTitleKeyAsText(true);
+    } else {
+      this.addButton('back', `BACK-TO:${sceneName}`);
+    }
     return this;
   }
 

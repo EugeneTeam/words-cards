@@ -6,6 +6,7 @@ import { UserRepositoryInterface } from './interfaces/user-repository.interface'
 import { UserInterface } from './interfaces/user.interface';
 import { InsertUserInterface } from './interfaces/insert-user.interface';
 import { TABLES } from '../../../../common/constants/tables-names.constant';
+import { TelegramIdInterface } from '../../../../common/interfaces/telegramId.interface';
 
 @Injectable()
 export class UserRepository implements UserRepositoryInterface<UserInterface> {
@@ -18,13 +19,17 @@ export class UserRepository implements UserRepositoryInterface<UserInterface> {
       .ignore()
       .returning('*');
 
-    return this.getOneByTelegramId(data.telegramId);
+    return this.findUserByTelegramId({
+      telegramId: data.telegramId,
+    });
   }
 
-  async getOneByTelegramId(telegramId: string): Promise<UserInterface> {
+  public async findUserByTelegramId(
+    data: TelegramIdInterface,
+  ): Promise<UserInterface> {
     return this.knex<UserInterface>(TABLES.USERS)
       .select()
-      .where({ telegramId })
+      .where({ telegramId: data.telegramId })
       .first();
   }
 }

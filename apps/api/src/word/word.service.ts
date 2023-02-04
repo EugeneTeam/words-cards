@@ -33,8 +33,6 @@ export class WordService {
               uuid: userUuid,
             });
 
-          console.log(configuration);
-
           const newWord = await this.wordRepository.createOneWordInTransaction(
             {
               ...word,
@@ -44,8 +42,6 @@ export class WordService {
             },
             transaction,
           );
-
-          console.log(newWord);
 
           await this.translationService.createManyInTransaction(
             {

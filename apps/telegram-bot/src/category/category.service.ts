@@ -11,6 +11,7 @@ import { AddCategoriesResponseInterface } from './interfaces/add-categories-resp
 import { RowsAndCountInterface } from '../../../../common/interfaces/rows-and-count.interface';
 import { GetCategoriesListAndCountInterface } from './interfaces/get-categories-list-and-count.interface';
 import { CategoryInfoInterface } from './interfaces/category-info.interface';
+import { StatusInterface } from '../common/interfaces/status.interface';
 
 @Injectable()
 export class CategoryService implements OnModuleInit {
@@ -23,6 +24,28 @@ export class CategoryService implements OnModuleInit {
       this.client.getService<CategoryRepositoryInterface<CategoryInterface>>(
         'CategoryService',
       );
+  }
+
+  public async updateCategory(
+    categoryUuid: string,
+    newCategoryName: string,
+  ): Promise<StatusInterface> {
+    const observable: Observable<StatusInterface> =
+      await this.categoryService.updateCategory({
+        uuid: categoryUuid,
+        name: newCategoryName,
+      });
+    return getDataFromObservableUtil<StatusInterface>(observable);
+  }
+
+  public async removeCategoryByUuid(
+    categoryUuid: string,
+  ): Promise<StatusInterface> {
+    const observable: Observable<StatusInterface> =
+      await this.categoryService.removeCategoryByUuid({
+        uuid: categoryUuid,
+      });
+    return getDataFromObservableUtil<StatusInterface>(observable);
   }
 
   public async findCategoryInfoByUuid(

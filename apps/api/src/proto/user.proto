@@ -2,8 +2,11 @@ syntax = "proto3";
 
 package proto;
 
+import "common.proto";
+
 service UserService {
   rpc InsertOne (NewUserRequest) returns (User);
+  rpc FindUserByTelegramId (TelegramId) returns (User);
 }
 
 message User {
