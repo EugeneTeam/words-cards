@@ -9,6 +9,9 @@ import { AddWordQuestionInterface } from '../../translator/interfaces/add-word-q
 import { WordService } from '../../word/word.service';
 import { StatusInterface } from '../../common/interfaces/status.interface';
 
+/**
+ * Simple word addition, no media or categories
+ */
 @Wizard('add-word-short-wizard')
 export class AddWordShortWizard extends WizardUtilsExtend {
   constructor(
@@ -36,15 +39,21 @@ export class AddWordShortWizard extends WizardUtilsExtend {
     await context.wizard.next();
   }
 
+  /**
+   * Checking the template of the input message and determining the words and translations in the template
+   * @param context
+   */
   @WizardStep(2)
   public async enterWord(@Ctx() context: ContextInterface): Promise<void> {
     const pattern: string = this.getMessageText(context);
 
     if (
-      !/^[a-zA-Zа-яА-Я]+[ ]\-[ ]([a-zA-Zа-яА-Я]+((, )|(,))?)+/.test(pattern)
+      !/^[a-zA-Zа-яА-Я]+[ ]?\-[ ]?([a-zA-Zа-яА-Я]+((, )|(,))?)+/.test(pattern)
     ) {
       await context.replyWithHTML(
-        context.translatorService.getTranslate('word-short-invalid-pattern'),
+        context.translatorService.getTranslate(
+          'add-word-short-invalid-pattern',
+        ),
       );
       return;
     }
@@ -81,12 +90,22 @@ export class AddWordShortWizard extends WizardUtilsExtend {
     await context.wizard.next();
   }
 
+  @Action('cancel')
+  private async cancel(@Ctx() context: ContextInterface): Promise<void> {
+    await context.scene.leave();
+    await context.scene.enter('word-menu-scene');
+  }
+
+  /**
+   * Save the word
+   * @param context
+   * @private
+   */
   @Action('save')
-  public async save(@Ctx() context: ContextInterface): Promise<void> {
+  private async save(@Ctx() context: ContextInterface): Promise<void> {
     const word: string = context.wizard.state.word;
     const translations: string[] = context.wizard.state.translations;
 
-    // TODO Add category selection
     const result: StatusInterface = await this.wordService.create({
       word: {
         word,
@@ -96,5 +115,18 @@ export class AddWordShortWizard extends WizardUtilsExtend {
         translations,
       },
     });
+
+    if (result.status) {
+      await context.reply(
+        context.translatorService.getTranslate('add-word-success'),
+      );
+    } else {
+      await context.reply(
+        context.translatorService.getTranslate('something-went-wrong'),
+      );
+    }
+
+    await context.scene.leave();
+    await context.scene.enter('word-menu-scene');
   }
 }

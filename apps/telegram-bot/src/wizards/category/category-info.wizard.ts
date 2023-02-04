@@ -31,9 +31,9 @@ export class CategoryInfoWizard {
         category,
         wordsInCategory,
       })
-      .addButton('remove', 'REMOVE-CATEGORY-QUESTION', true)
-      .addButton('edit', 'EDIT-CATEGORY-ENTER', true)
-      .addBackButtonForWizard('BACK')
+      .addButton('remove', 'remove-category-question', true)
+      .addButton('edit', 'edit-category-enter', true)
+      .addBackButtonForWizard('back')
       .build();
 
     await context.replyWithHTML(uiBuilder.title, uiBuilder.buttons);
@@ -68,8 +68,8 @@ export class CategoryInfoWizard {
         newCategory: newCategoryName,
         oldCategory: context.wizard.state.category,
       })
-      .addButton('accept', 'SAVE')
-      .addButton('cancel-checkmark', 'CANCEL')
+      .addButton('accept', 'save')
+      .addButton('cancel-checkmark', 'canvel')
       .build();
 
     await context.replyWithHTML(uiBuilder.title, uiBuilder.buttons);
@@ -80,7 +80,7 @@ export class CategoryInfoWizard {
    * @param context
    * @private
    */
-  @Action('BACK')
+  @Action('back')
   private async back(@Ctx() context: ContextInterface): Promise<void> {
     await context.scene.leave();
     await context.scene.enter('categories-list-scene');
@@ -91,7 +91,7 @@ export class CategoryInfoWizard {
    * @param context
    * @private
    */
-  @Action('SAVE')
+  @Action('save')
   private async save(@Ctx() context: ContextInterface): Promise<void> {
     const uuid = context.wizard.state.uuid;
     const name = context.wizard.state.newCategoryName;
@@ -119,7 +119,7 @@ export class CategoryInfoWizard {
    * @param context
    * @private
    */
-  @Action('REMOVE-CATEGORY-QUESTION')
+  @Action('remove-category-question')
   private async removeQuestion(
     @Ctx() context: ContextInterface,
   ): Promise<void> {
@@ -131,8 +131,8 @@ export class CategoryInfoWizard {
       .addTitle<{ category: string }>('category-remove', {
         category: context.wizard.state.category,
       })
-      .addButton('accept', 'REMOVE')
-      .addButton('cancel-checkmark', 'CANCEL')
+      .addButton('accept', 'remove')
+      .addButton('cancel-checkmark', 'cancel')
       .build();
 
     await context.replyWithHTML(uiBuilder.title, uiBuilder.buttons);
@@ -143,7 +143,7 @@ export class CategoryInfoWizard {
    * @param context
    * @private
    */
-  @Action('REMOVE')
+  @Action('remove')
   private async remove(@Ctx() context: ContextInterface): Promise<void> {
     const categoryUuid = context.wizard.state.categoryUuid;
     const result: StatusInterface =
@@ -167,13 +167,13 @@ export class CategoryInfoWizard {
    * @param context
    * @private
    */
-  @Action('CANCEL')
+  @Action('cancel')
   private async cancel(@Ctx() context: ContextInterface): Promise<void> {
     await context.scene.leave();
     await context.scene.enter('categories-list-scene');
   }
 
-  @Action('EDIT-CATEGORY-ENTER')
+  @Action('edit-category-enter')
   private async edit(@Ctx() context: ContextInterface): Promise<void> {
     await context.removePreviousKeyboard();
     await context.reply(
