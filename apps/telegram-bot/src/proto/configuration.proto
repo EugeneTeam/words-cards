@@ -4,8 +4,8 @@ package proto;
 
 service ConfigurationService {
   rpc FindOneByUserUuid(ConfigurationUuid) returns (Configuration);
-  rpc CreateConfiguration(CreateConfiguration) returns (Configuration);
-  rpc UpdateConfiguration(CreateConfigurationInput) returns (Configuration);
+  rpc CreateConfiguration(CreateConfigurationInputData) returns (Configuration);
+  rpc UpdateConfiguration(UpdateConfigurationInputData) returns (Configuration);
 }
 
 message ConfigurationUuid {
@@ -20,13 +20,13 @@ message Configuration {
   bool isNull = 5;
 }
 
-message CreateConfiguration {
+message CreateConfigurationInputData {
   string userUuid = 1;
   string defaultLanguageForNewWord = 3;
   string defaultLanguageForWordTranslation = 4;
 }
 
-message CreateConfigurationInput {
+message UpdateConfigurationInputData {
   string configUuid = 1;
-  CreateConfiguration data = 2;
+  CreateConfigurationInputData data = 2;
 }

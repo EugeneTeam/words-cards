@@ -15,7 +15,7 @@ export class WordMenuScene {
       .addNewButtonLine()
       .addTitle('manage-words:title')
       .addButton('manage-words:add-short', 'OPEN:add-word-short-wizard', true)
-      .addButton('manage-words:add', 'callback', true)
+      .addButton('manage-words:add', 'OPEN:add-word-wizard', true)
       .addButton('manage-words:remove', 'callback', true)
       .addButton('manage-words:update', 'callback', true)
       .addButton('manage-words:list', 'callback', true)

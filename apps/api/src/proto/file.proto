@@ -3,27 +3,24 @@ syntax = "proto3";
 package proto;
 
 service FileService {
-  rpc GetOneByName (GetOneByNameRequest) returns (File);
-  rpc UpdateOneByName (UpdateOneByNameRequest) returns (File);
-  rpc AddOne (AddFile) returns (File);
+  rpc AddFile (AddFileInputData) returns (File);
 }
 
 message File {
   string uuid = 1;
-  string name = 2;
-  string fileToken = 3;
+  string token = 2;
+  string userUuid = 3;
 }
 
-message UpdateOneByNameRequest {
-  string name = 1;
-  string fileToken = 2;
+message AddFileInputData {
+  string userUuid = 1;
+  string token = 2;
+  FileType type = 3;
 }
 
-message GetOneByNameRequest {
-  string name = 1;
-}
-
-message AddFile {
-  string name = 1;
-  string fileToken = 2;
+enum FileType {
+  video = 0;
+  audio = 1;
+  image = 2;
+  unknown = 3;
 }

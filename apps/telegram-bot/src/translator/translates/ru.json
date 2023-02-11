@@ -1,6 +1,6 @@
 {
   "welcome": "Добро пожаловать, {{username}}",
-  "main-menu:title": "Главное меню",
+  "main-menu:title": "⚙️ Главное меню",
 
   "main-menu:words": "Ⓜ Меню слов",
   "main-menu:setting": "\uD83D\uDEE0 Настройки",
@@ -17,6 +17,9 @@
   "add-word-question": "Добавить слово в список?\n<b>Слово:</b> {{word}}\n<b>Перевод(ы):</b> {{translations}}",
   "add-word-to-category-question": "Добавить к категории?",
   "add-word-success": "Слово добавлено",
+  "word-enter": "Введите слово",
+  "word-translation": "Введите перевод",
+  "add-media-question": "Желаете добавить <b>картинку</b>, <b>видео</b> или <b>аудио</> к данному слову?",
 
 
   "categories-menu:title": "⚙ Меню категорий",
@@ -61,5 +64,7 @@
   "remove": "\uD83D\uDD8D Удалить",
   "edit": "\uD83D\uDD8C Редактировать",
   "accept": "✅ Подтвердить",
-  "cancel-checkmark": "☑️ Отмена"
+  "cancel-checkmark": "❎ Отмена",
+  "add": "✅ Добавить",
+  "skip": "❎ Пропустить"
 }

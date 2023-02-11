@@ -6,9 +6,22 @@ import { AddWordShortWizard } from './word/add-word-short.wizard';
 import { AddCategoryWizard } from './category/add-category.wizard';
 import { CategoryModule } from '../category/category.module';
 import { CategoryInfoWizard } from './category/category-info.wizard';
+import { AddWordWizard } from './word/add-word.wizard';
+import { FileModule } from '../file/file.module';
 
 @Module({
-  imports: [ConfigurationModule, LanguageModule, WordModule, CategoryModule],
-  providers: [AddWordShortWizard, AddCategoryWizard, CategoryInfoWizard],
+  imports: [
+    ConfigurationModule,
+    LanguageModule,
+    WordModule,
+    CategoryModule,
+    FileModule,
+  ],
+  providers: [
+    AddWordShortWizard,
+    AddCategoryWizard,
+    CategoryInfoWizard,
+    AddWordWizard,
+  ],
 })
 export class WizardsModule {}

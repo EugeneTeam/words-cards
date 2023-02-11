@@ -1,5 +1,8 @@
+import { ContentTypeEnum } from '../enums/content-type.enum';
+
 export interface FileInterface {
-  uuid: string;
-  name: string;
-  fileToken: string;
+  readonly uuid: string;
+  readonly userUuid: string;
+  readonly token: string;
+  readonly type: ContentTypeEnum;
 }

@@ -5,10 +5,10 @@ package proto;
 import "common.proto";
 
 service WordService {
-  rpc CreateOneWordInTransaction (WordInputData) returns (Status);
+  rpc CreateOneWordInTransaction (CreateWordInputData) returns (Status);
 }
 
-message WordInputData {
+message CreateWordInputData {
   NewWordData word = 1;
   string userUuid = 2;
   WordTranslations translations = 3;

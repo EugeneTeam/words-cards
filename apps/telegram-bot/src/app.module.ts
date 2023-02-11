@@ -14,6 +14,7 @@ import { LanguageModule } from './language/language.module';
 import { WordModule } from './word/word.module';
 import { CategoryModule } from './category/category.module';
 import { UserService } from './user/user.service';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -33,6 +34,6 @@ import { UserService } from './user/user.service';
     WordModule,
     CategoryModule,
   ],
-  providers: [],
+  providers: [AppService],
 })
 export class AppModule {}

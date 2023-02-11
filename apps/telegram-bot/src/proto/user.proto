@@ -5,7 +5,7 @@ package proto;
 import "common.proto";
 
 service UserService {
-  rpc InsertOne (NewUserRequest) returns (User);
+  rpc InsertOne (CreateUserInputData) returns (User);
   rpc FindUserByTelegramId (TelegramId) returns (User);
 }
 
@@ -17,7 +17,7 @@ message User {
   string lastName = 5;
 }
 
-message NewUserRequest {
+message CreateUserInputData {
   string telegramId = 1;
   optional string nickName = 2;
   optional string firstName = 3;

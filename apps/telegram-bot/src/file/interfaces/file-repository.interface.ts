@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
+import { AddFileInterface } from './add-file.interface';
 
 export interface FileRepositoryInterface<File> {
-  getOneByName(name: string): Observable<File>;
-  updateOneByName(name: string, fileToken: string): Observable<File>;
-  addOne(name: string, fileToken: string): Observable<File>;
+  addFile(data: AddFileInterface): Observable<File>;
 }
