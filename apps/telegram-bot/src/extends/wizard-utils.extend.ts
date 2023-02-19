@@ -11,4 +11,10 @@ export class WizardUtilsExtend {
   ): Promise<void> {
     await context.wizard.steps[step - 1](context);
   }
+
+  public async deleteLastMessage(context: ContextInterface): Promise<void> {
+    await context.deleteMessage(
+      context?.update?.messate?.id || context?.message?.id,
+    );
+  }
 }

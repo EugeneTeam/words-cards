@@ -16,6 +16,9 @@ import { AxiosResponse } from 'axios';
 import { ContentResponseInterface } from './interfaces/content-response.interface';
 import { ContentTypeEnum } from './enums/content-type.enum';
 import { AddFileInterface } from './interfaces/add-file.interface';
+import { extension } from 'mime-types';
+import { AVAILABLE_IMAGE_CONSTANT } from './constants/available-image-type.constant';
+import { UploadFileResponseInterface } from './interfaces/upload-file-response.interface';
 
 @Injectable()
 export class FileService implements OnModuleInit {
@@ -34,38 +37,67 @@ export class FileService implements OnModuleInit {
       );
   }
 
-  public async getFileFromTelegrafContext(context: ContextInterface) {
+  public async getFileFromTelegrafContext(
+    context: ContextInterface,
+  ): Promise<UploadFileResponseInterface> {
     return new Promise(async (resolve, reject) => {
       const content: ContentResponseInterface =
         this.defineContentTypeByContext(context);
 
-      if (content) {
-        const url: URL = await this.appService.downloadFileByFileId(
-          content.data.file_id,
-        );
-        const token: string = this.generateFileNameByContentType(content);
-        const path: string = this.getPathByContentType(content.type);
-        const stream: WriteStream = createWriteStream(`${path}/${token}`);
-
-        const response: AxiosResponse<any, any> = await lastValueFrom(
-          this.httpService.get(url.href, {
-            method: 'GET',
-            responseType: 'stream',
-          }),
-        );
-
-        response.data.pipe(stream);
-
-        stream.on('finish', async () => {
-          await this.addFile({
-            token: token,
-            type: content.type,
-            userUuid: context.session.userUuid,
+      if (content.type === ContentTypeEnum.document) {
+        if (
+          !AVAILABLE_IMAGE_CONSTANT.includes(
+            extension(content.data.mime_type).toString(),
+          )
+        ) {
+          resolve({
+            status: false,
+            message: 'Unavailable image type',
+            mediaType: content.type,
           });
-          resolve(true);
-        });
-        stream.on('error', reject);
+          return;
+        }
       }
+
+      if (content.type === ContentTypeEnum.unknown) {
+        resolve({
+          status: false,
+          message: 'Unknown filetype',
+          mediaType: content.type,
+        });
+        return;
+      }
+      // The document can only be an uncompressed image
+
+      const url: URL = await this.appService.downloadFileByFileId(
+        content.data.file_id,
+      );
+      const token: string = this.generateFileNameByContentType(content);
+      const path: string = this.getPathByContentType(content.type);
+      const stream: WriteStream = createWriteStream(`${path}/${token}`);
+
+      const response: AxiosResponse<any, any> = await lastValueFrom(
+        this.httpService.get(url.href, {
+          method: 'GET',
+          responseType: 'stream',
+        }),
+      );
+
+      response.data.pipe(stream);
+
+      stream.on('finish', async () => {
+        await this.addFile({
+          token: token,
+          type: content.type,
+          userUuid: context.session.userUuid,
+        });
+        resolve({
+          status: true,
+          message: 'success',
+          mediaType: content.type,
+        });
+      });
+      stream.on('error', reject);
     });
   }
 
@@ -78,7 +110,6 @@ export class FileService implements OnModuleInit {
   private defineContentTypeByContext(
     context: ContextInterface,
   ): ContentResponseInterface {
-    console.log(context.update.message);
     /**
      * The picture can be obtained in 4 different sizes
      * Max index 3
@@ -93,8 +124,7 @@ export class FileService implements OnModuleInit {
       type = ContentTypeEnum.image;
     }
 
-    const audio =
-      context.update.message?.audio || context.update.message?.voice;
+    const audio = context.update.message?.audio;
     if (audio) {
       type = ContentTypeEnum.audio;
     }
@@ -104,9 +134,19 @@ export class FileService implements OnModuleInit {
       type = ContentTypeEnum.video;
     }
 
+    const voice = context.update.message?.voice;
+    if (voice) {
+      type = ContentTypeEnum.voice;
+    }
+
+    const document = context.update.message?.document;
+    if (document) {
+      type = ContentTypeEnum.document;
+    }
+
     return {
       type,
-      data: photo || audio || video || null,
+      data: photo || audio || video || voice || document || null,
     };
   }
   private generateFileNameByContentType(
@@ -138,13 +178,16 @@ export class FileService implements OnModuleInit {
     if (type === ContentTypeEnum.video) {
       lastFolderName = 'video';
     }
-    if (type === ContentTypeEnum.audio) {
+    if (type === ContentTypeEnum.audio || type === ContentTypeEnum.voice) {
       lastFolderName = 'audio';
     }
-    if (type === ContentTypeEnum.image) {
+    if (type === ContentTypeEnum.image || type === ContentTypeEnum.document) {
       lastFolderName = 'images';
     }
 
+    /**
+     * Directory with files outside the dist directory
+     */
     return path.join(
       __dirname,
       '..',

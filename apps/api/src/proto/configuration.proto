@@ -15,8 +15,8 @@ message ConfigurationUuid {
 message Configuration {
   string uuid = 1;
   string userUuid = 2;
-  string defaultLanguageForNewWord = 3;
-  string defaultLanguageForWordTranslation = 4;
+  DefaultLanguagesForText defaultLanguageForNewWord = 3;
+  DefaultLanguagesForText defaultLanguageForWordTranslation = 4;
   bool isNull = 5;
 }
 
@@ -29,4 +29,9 @@ message CreateConfigurationInputData {
 message UpdateConfigurationInputData {
   string configUuid = 1;
   CreateConfigurationInputData data = 2;
+}
+
+message DefaultLanguagesForText {
+  string name = 1;
+  string uuid = 2;
 }

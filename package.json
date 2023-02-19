@@ -38,6 +38,7 @@
     "class-transformer": "^0.5.1",
     "concurrently": "^7.5.0",
     "knex": "^2.3.0",
+    "mime-types": "^2.1.35",
     "nest-knexjs": "^0.0.12",
     "nestjs-telegraf": "^2.6.2",
     "pg": "^8.8.0",
@@ -45,6 +46,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "telegraf": "^4.10.0",
+    "ts-mixer": "^6.0.3",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -53,6 +55,7 @@
     "@nestjs/testing": "^9.0.0",
     "@types/express": "^4.17.13",
     "@types/jest": "28.1.4",
+    "@types/mime-types": "^2.1.1",
     "@types/node": "^16.0.0",
     "@types/supertest": "^2.0.11",
     "@types/uuid": "^9.0.0",
