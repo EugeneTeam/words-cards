@@ -1,4 +1,9 @@
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import {
+  CACHE_MANAGER,
+  Inject,
+  Injectable,
+  OnModuleInit,
+} from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
@@ -12,12 +17,19 @@ import { RowsAndCountInterface } from '../../../../common/interfaces/rows-and-co
 import { GetCategoriesListAndCountInterface } from './interfaces/get-categories-list-and-count.interface';
 import { CategoryInfoInterface } from './interfaces/category-info.interface';
 import { StatusInterface } from '../common/interfaces/status.interface';
+import { Cache } from 'cache-manager';
+import { CacheWrapperUtil } from '../utils/cache-wrapper.util';
 
 @Injectable()
-export class CategoryService implements OnModuleInit {
+export class CategoryService extends CacheWrapperUtil implements OnModuleInit {
   private categoryService: CategoryRepositoryInterface<CategoryInterface>;
 
-  constructor(@Inject(PACKAGE_NAME) private readonly client: ClientGrpc) {}
+  constructor(
+    @Inject(PACKAGE_NAME) private readonly client: ClientGrpc,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+  ) {
+    super();
+  }
 
   public onModuleInit(): void {
     this.categoryService =
@@ -29,7 +41,9 @@ export class CategoryService implements OnModuleInit {
   public async updateCategory(
     categoryUuid: string,
     newCategoryName: string,
+    userUuid: string,
   ): Promise<StatusInterface> {
+    await this.clearCacheByUserUuid(this.cacheManager, userUuid);
     const observable: Observable<StatusInterface> =
       await this.categoryService.updateCategory({
         uuid: categoryUuid,
@@ -40,7 +54,9 @@ export class CategoryService implements OnModuleInit {
 
   public async removeCategoryByUuid(
     categoryUuid: string,
+    userUuid: string,
   ): Promise<StatusInterface> {
+    await this.clearCacheByUserUuid(this.cacheManager, userUuid);
     const observable: Observable<StatusInterface> =
       await this.categoryService.removeCategoryByUuid({
         uuid: categoryUuid,
@@ -61,6 +77,7 @@ export class CategoryService implements OnModuleInit {
   public async createOneCategory(
     data: AddCategoryInterface,
   ): Promise<AddCategoriesResponseInterface> {
+    await this.clearCacheByUserUuid(this.cacheManager, data.userUuid);
     const observable: Observable<AddCategoriesResponseInterface> =
       await this.categoryService.createCategories(data);
     return getDataFromObservableUtil<AddCategoriesResponseInterface>(
@@ -71,10 +88,15 @@ export class CategoryService implements OnModuleInit {
   public async findAllCategoriesAndCountByUserUuid(
     data: GetCategoriesListAndCountInterface,
   ): Promise<RowsAndCountInterface<CategoryInterface>> {
-    const observable: Observable<RowsAndCountInterface<CategoryInterface>> =
-      await this.categoryService.findAllCategoriesAndCountByUserUuid(data);
-    return getDataFromObservableUtil<RowsAndCountInterface<CategoryInterface>>(
-      observable,
+    const key = `${data.userUuid}${data.pagination.limit}${data.pagination.offset}`;
+    return this.cacheWrapper<
+      RowsAndCountInterface<CategoryInterface>,
+      GetCategoriesListAndCountInterface
+    >(
+      this.categoryService.findAllCategoriesAndCountByUserUuid,
+      this.cacheManager,
+      key,
+      data,
     );
   }
 }

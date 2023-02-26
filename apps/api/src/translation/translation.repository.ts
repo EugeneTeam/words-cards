@@ -20,7 +20,7 @@ export class TranslationRepository
     transaction: Transaction,
   ): Promise<TranslationInterface> {
     const normalizeList = data.translations.map((translation: string) => ({
-      translate: translation,
+      translate: translation?.trim(),
       wordUuid: data.wordUuid,
       originalLanguageUuid: data.originalLanguageUuid,
     }));

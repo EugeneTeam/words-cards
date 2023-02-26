@@ -8,7 +8,7 @@ import { FileInterface } from './interfaces/file.interface';
 import { getDataFromObservableUtil } from '../utils/get-data-from-observable.util';
 import { ContextInterface } from '../interfaces/context.interface';
 import { AppService } from '../app.service';
-import { createWriteStream, WriteStream } from 'fs';
+import { createWriteStream, WriteStream, unlinkSync, existsSync } from 'fs';
 import { HttpService } from '@nestjs/axios';
 import { v4 as uuid } from 'uuid';
 import * as path from 'path';
@@ -19,6 +19,7 @@ import { AddFileInterface } from './interfaces/add-file.interface';
 import { extension } from 'mime-types';
 import { AVAILABLE_IMAGE_CONSTANT } from './constants/available-image-type.constant';
 import { UploadFileResponseInterface } from './interfaces/upload-file-response.interface';
+import { StatusInterface } from '../common/interfaces/status.interface';
 
 @Injectable()
 export class FileService implements OnModuleInit {
@@ -37,7 +38,26 @@ export class FileService implements OnModuleInit {
       );
   }
 
-  public async getFileFromTelegrafContext(
+  public async removeFileFromDB(
+    contentType: ContentTypeEnum,
+    token: string,
+  ): Promise<void> {
+    const path: string = this.getPathByContentType(contentType);
+    const fullPath = `${path}/${token}`;
+    if (existsSync(fullPath)) {
+      await unlinkSync(fullPath);
+    }
+  }
+
+  public async removeFileFromServer(token: string): Promise<StatusInterface> {
+    const observable: Observable<StatusInterface> =
+      await this.fileService.removeFileByToken({
+        token,
+      });
+    return getDataFromObservableUtil<StatusInterface>(observable);
+  }
+
+  public async saveFile(
     context: ContextInterface,
   ): Promise<UploadFileResponseInterface> {
     return new Promise(async (resolve, reject) => {
@@ -45,6 +65,7 @@ export class FileService implements OnModuleInit {
         this.defineContentTypeByContext(context);
 
       if (content.type === ContentTypeEnum.document) {
+        // The document can only be an uncompressed image
         if (
           !AVAILABLE_IMAGE_CONSTANT.includes(
             extension(content.data.mime_type).toString(),
@@ -67,7 +88,6 @@ export class FileService implements OnModuleInit {
         });
         return;
       }
-      // The document can only be an uncompressed image
 
       const url: URL = await this.appService.downloadFileByFileId(
         content.data.file_id,
@@ -90,11 +110,13 @@ export class FileService implements OnModuleInit {
           token: token,
           type: content.type,
           userUuid: context.session.userUuid,
-        });
-        resolve({
-          status: true,
-          message: 'success',
-          mediaType: content.type,
+        }).then((file) => {
+          resolve({
+            status: true,
+            message: 'success',
+            mediaType: content.type,
+            token: file.token,
+          });
         });
       });
       stream.on('error', reject);
@@ -164,7 +186,7 @@ export class FileService implements OnModuleInit {
       return `${uuid()}${Date.now()}.jpg`;
     }
 
-    if (content.type === ContentTypeEnum.audio) {
+    if (content.type === ContentTypeEnum.voice) {
       /**
        * An audio file without a filename is a voice message
        */

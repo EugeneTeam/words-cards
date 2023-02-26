@@ -2,8 +2,15 @@ syntax = "proto3";
 
 package proto;
 
+import "common.proto";
+
 service FileService {
   rpc AddFile (AddFileInputData) returns (File);
+  rpc RemoveFileByToken(FileToken) returns (Status);
+}
+
+message FileToken {
+  string token = 1;
 }
 
 message File {
@@ -22,5 +29,7 @@ enum FileType {
   video = 0;
   audio = 1;
   image = 2;
-  unknown = 3;
+  document = 3;
+  voice = 4;
+  unknown = 5;
 }

@@ -17,4 +17,21 @@ export class WizardUtilsExtend {
       context?.update?.messate?.id || context?.message?.id,
     );
   }
+
+  public async deleteLastKeyboard(context: ContextInterface): Promise<void> {
+    try {
+      await context.answerCbQuery();
+      await context.editMessageReplyMarkup({ inline_keyboard: [] });
+    } catch (e) {}
+  }
+
+  /**
+   * When using markdown, you need to escape some special characters
+   * @param value
+   */
+  public addBackslash(value: string): string {
+    return value.replace(/([!"№;%:?*()_+/{}\[\]',<.>`~\-])/gm, (w) => {
+      return `\\${w}`;
+    });
+  }
 }

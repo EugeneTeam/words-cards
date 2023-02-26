@@ -1,18 +1,21 @@
 import { Action, Ctx, Wizard, WizardStep } from 'nestjs-telegraf';
 import { ContextInterface } from '../../interfaces/context.interface';
-import { UiBuilderUtil } from '../../utils/ui-builder/ui-builder.util';
-import { CategoryInfoInterface } from '../../category/interfaces/category-info.interface';
 import { CategoryService } from '../../category/category.service';
 import { StatusInterface } from '../../common/interfaces/status.interface';
-import { CategoryNewNameInterface } from '../../translator/interfaces/category-new-name.interface';
+import { WizardUtilsExtend } from '../../extends/wizard-utils.extend';
+import { CategoryNewNameUi } from '../../ui/category-new-name.ui';
+import { CategoryRemoveUi } from '../../ui/category-remove.ui';
+import { CategoryInfoUi } from '../../ui/category-info.ui';
 
 /**
  * Deleting a category, UI + API + telegraf
  * Category name update, UI + API + telegraf
  */
 @Wizard('categories-info-wizard')
-export class CategoryInfoWizard {
-  constructor(private readonly categoryService: CategoryService) {}
+export class CategoryInfoWizard extends WizardUtilsExtend {
+  constructor(private readonly categoryService: CategoryService) {
+    super();
+  }
 
   /**
    * Delete or update a category
@@ -20,23 +23,13 @@ export class CategoryInfoWizard {
    */
   @WizardStep(1)
   public async categoryInfo(@Ctx() context: ContextInterface): Promise<void> {
-    const { category, wordsInCategory, categoryUuid } = context.scene.state;
+    const { category, categoryUuid } = context.scene.state;
     context.wizard.state.category = category;
     context.wizard.state.uuid = categoryUuid;
 
-    const uiBuilder = new UiBuilderUtil(context.languageIso)
-      .useInlineKeyboardMethod()
-      .addNewButtonLine()
-      .addTitle<CategoryInfoInterface>('category-info', {
-        category,
-        wordsInCategory,
-      })
-      .addButton('remove', 'remove-category-question', true)
-      .addButton('edit', 'edit-category-enter', true)
-      .addBackButtonForWizard('back')
-      .build();
+    const { title, buttons } = CategoryInfoUi(context);
 
-    await context.replyWithHTML(uiBuilder.title, uiBuilder.buttons);
+    await context.replyWithHTML(title, buttons);
     await context.wizard.next();
   }
 
@@ -61,18 +54,9 @@ export class CategoryInfoWizard {
 
     context.wizard.state.newCategoryName = newCategoryName;
 
-    const uiBuilder = new UiBuilderUtil(context.languageIso)
-      .useInlineKeyboardMethod()
-      .addNewButtonLine()
-      .addTitle<CategoryNewNameInterface>('category-new-name', {
-        newCategory: newCategoryName,
-        oldCategory: context.wizard.state.category,
-      })
-      .addButton('accept', 'save')
-      .addButton('cancel-checkmark', 'canvel')
-      .build();
+    const { title, buttons } = CategoryNewNameUi(context, newCategoryName);
 
-    await context.replyWithHTML(uiBuilder.title, uiBuilder.buttons);
+    await context.replyWithHTML(title, buttons);
   }
 
   /**
@@ -98,6 +82,7 @@ export class CategoryInfoWizard {
     const result: StatusInterface = await this.categoryService.updateCategory(
       uuid,
       name,
+      context.session.userUuid,
     );
 
     if (result.status) {
@@ -123,19 +108,10 @@ export class CategoryInfoWizard {
   private async removeQuestion(
     @Ctx() context: ContextInterface,
   ): Promise<void> {
-    await context.removePreviousKeyboard();
+    await this.deleteLastKeyboard(context);
 
-    const uiBuilder = new UiBuilderUtil(context.languageIso)
-      .useInlineKeyboardMethod()
-      .addNewButtonLine()
-      .addTitle<{ category: string }>('category-remove', {
-        category: context.wizard.state.category,
-      })
-      .addButton('accept', 'remove')
-      .addButton('cancel-checkmark', 'cancel')
-      .build();
-
-    await context.replyWithHTML(uiBuilder.title, uiBuilder.buttons);
+    const { title, buttons } = CategoryRemoveUi(context);
+    await context.replyWithHTML(title, buttons);
   }
 
   /**
@@ -147,7 +123,10 @@ export class CategoryInfoWizard {
   private async remove(@Ctx() context: ContextInterface): Promise<void> {
     const categoryUuid = context.wizard.state.categoryUuid;
     const result: StatusInterface =
-      await this.categoryService.removeCategoryByUuid(categoryUuid);
+      await this.categoryService.removeCategoryByUuid(
+        categoryUuid,
+        context.session.userUuid,
+      );
 
     if (result.status) {
       await context.reply(
@@ -175,7 +154,7 @@ export class CategoryInfoWizard {
 
   @Action('edit-category-enter')
   private async edit(@Ctx() context: ContextInterface): Promise<void> {
-    await context.removePreviousKeyboard();
+    await this.deleteLastKeyboard(context);
     await context.reply(
       context.translatorService.getTranslate('category-enter-name'),
     );

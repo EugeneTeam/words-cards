@@ -45,7 +45,7 @@ export class WordService {
 
           await this.translationService.createManyInTransaction(
             {
-              translations: translations.translations,
+              translations: translations as unknown as string[],
               wordUuid: newWord.uuid,
               originalLanguageUuid:
                 configuration.defaultLanguageForWordTranslation.uuid,

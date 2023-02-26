@@ -1,9 +1,7 @@
-import { CategoryService } from '../../category/category.service';
 import { CategoryListComponentScene } from '../../scenes/category/category-list-component.scene';
-import { Mixin } from 'ts-mixer';
-import { WizardUtilsExtend } from '../../extends/wizard-utils.extend';
 import { Action, Ctx } from 'nestjs-telegraf';
 import { ContextInterface } from '../../interfaces/context.interface';
+import { CategoryListComponentDataInterface } from '../../scenes/interfaces/category-list-component-data.interface';
 
 /**
  * Isolation of pagination functionality.
@@ -13,18 +11,12 @@ import { ContextInterface } from '../../interfaces/context.interface';
  * - describe the method of transition through the category pages
  * - we describe the action handler for clicking on the category
  */
-export class AddWordIsolation extends Mixin(
-  // TODO сделать кнопку back настраиваемой через конструктор родительского класcа.
-  // TODO переделать её в "отмена"?
-  CategoryListComponentScene,
-  WizardUtilsExtend,
-) {
-  constructor(
-    categoryService: CategoryService,
-    sceneName: string,
-    categoryCallback: string,
-  ) {
-    super(categoryService, sceneName, categoryCallback);
+export class AddWordIsolation extends CategoryListComponentScene {
+  constructor(options: CategoryListComponentDataInterface) {
+    super({
+      ...options,
+      categoryCallback: 'select-category',
+    });
   }
 
   /**
@@ -48,7 +40,6 @@ export class AddWordIsolation extends Mixin(
     const limit = Number(data[2]);
     const offset = Number(data[3]);
     if (limit > 0) {
-      await this.deleteLastMessage(context);
       await this.renderList(context, limit, offset);
     }
     return;
@@ -59,6 +50,29 @@ export class AddWordIsolation extends Mixin(
    * @param context
    * @public
    */
-  // TODO при клике по категории добавлять её uuid в wizard.state
-  // some callback function
+  @Action(/^select-category:[a-z0-9-]+$/)
+  public async selectCategory(@Ctx() context: ContextInterface): Promise<void> {
+    context.wizard.state.categoryUuid = context.update.callback_query.data
+      .split(':')
+      .pop();
+    await context.reply(
+      context.translatorService.getTranslate('add-word-category-added'),
+    );
+    await this.deleteLastKeyboard(context);
+    await context.wizard.next();
+    await this.renderWizardStep(context, 9);
+  }
+
+  @Action('deselect-category')
+  public async deselectCategory(
+    @Ctx() context: ContextInterface,
+  ): Promise<void> {
+    await context.reply(
+      context.translatorService.getTranslate('add-word-cancel-choose-category'),
+    );
+    await this.deleteLastMessage(context);
+    await this.deleteLastKeyboard(context);
+    await context.wizard.next();
+    await this.renderWizardStep(context, 9);
+  }
 }

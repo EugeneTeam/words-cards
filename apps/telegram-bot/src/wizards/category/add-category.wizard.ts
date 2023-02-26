@@ -1,12 +1,15 @@
 import { Action, Ctx, Wizard, WizardStep } from 'nestjs-telegraf';
 import { ContextInterface } from '../../interfaces/context.interface';
 import { CategoryService } from '../../category/category.service';
-import { UiBuilderUtil } from '../../utils/ui-builder/ui-builder.util';
 import { AddCategoriesResponseInterface } from '../../category/interfaces/add-categories-response.interface';
+import { AddCategoryQuestionUi } from '../../ui/add-category-question.ui';
+import { WizardUtilsExtend } from '../../extends/wizard-utils.extend';
 
 @Wizard('add-category-wizard')
-export class AddCategoryWizard {
-  constructor(private readonly categoryService: CategoryService) {}
+export class AddCategoryWizard extends WizardUtilsExtend {
+  constructor(private readonly categoryService: CategoryService) {
+    super();
+  }
 
   @WizardStep(1)
   public async enter(@Ctx() context: ContextInterface): Promise<void> {
@@ -21,22 +24,13 @@ export class AddCategoryWizard {
 
   @WizardStep(2)
   public async enterCategory(@Ctx() context: ContextInterface): Promise<void> {
-    const categories = (
-      context?.update?.message?.text || context?.message?.text
-    ).split('\n');
+    const categories = this.getMessageText(context).split('\n');
 
     context.wizard.state.categories = categories;
 
-    const builder = new UiBuilderUtil(context.languageIso)
-      .useInlineKeyboardMethod()
-      .addNewButtonLine()
-      .addTitle<{ categories: string }>('add-category-question', {
-        categories: categories.join('\n'),
-      })
-      .addButton('save', 'save')
-      .addButton('cancel', 'cancel')
-      .build();
-    await context.replyWithHTML(builder.title, builder.buttons);
+    const { title, buttons } = AddCategoryQuestionUi(context, categories);
+
+    await context.replyWithHTML(title, buttons);
     await context.wizard.next();
   }
 
@@ -77,14 +71,14 @@ export class AddCategoryWizard {
         },
       ),
     );
-    await context.removePreviousKeyboard();
+    await this.deleteLastKeyboard(context);
     await context.scene.leave();
     await context.scene.enter('category-menu-scene');
   }
 
   @Action('cancel')
   private async cancel(@Ctx() context: ContextInterface): Promise<void> {
-    await context.removePreviousKeyboard();
+    await this.deleteLastKeyboard(context);
     await context.scene.leave();
     await context.scene.enter('category-menu-scene');
   }

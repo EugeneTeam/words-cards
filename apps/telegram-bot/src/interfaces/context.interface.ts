@@ -7,7 +7,6 @@ export interface ContextInterface extends Context {
   translatorService: TranslatorService;
   update: any;
   scene: any;
-  removePreviousKeyboard(): Promise<void | never>;
   wizard: any;
   session: any;
   isolation?: boolean;

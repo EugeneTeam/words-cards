@@ -1,10 +1,13 @@
 import { Action, Ctx, Update } from 'nestjs-telegraf';
 import { ContextInterface } from '../../interfaces/context.interface';
 import { CategoryService } from '../../category/category.service';
+import { WizardUtilsExtend } from '../../extends/wizard-utils.extend';
 
 @Update()
-export class CategoryAction {
-  constructor(private readonly categoryService: CategoryService) {}
+export class CategoryAction extends WizardUtilsExtend {
+  constructor(private readonly categoryService: CategoryService) {
+    super();
+  }
 
   @Action(/^PAGINATION-CATEGORY:[0-9a-z\-]+:[0-9]+:[0-9]+$/)
   public async pagination(@Ctx() context: ContextInterface): Promise<void> {
@@ -34,7 +37,7 @@ export class CategoryAction {
       categoryUuid,
     );
 
-    await context.removePreviousKeyboard();
+    await this.deleteLastKeyboard(context);
 
     await context.scene.enter('categories-info-wizard', {
       category: info.category.name,

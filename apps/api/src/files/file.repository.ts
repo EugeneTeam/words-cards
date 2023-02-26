@@ -6,6 +6,8 @@ import { Knex } from 'knex';
 import { TABLES } from '../../../../common/constants/tables-names.constant';
 import { AddFileInterface } from './interfaces/add-file.interface';
 import { ContentTypeEnum } from './enums/content-type.enum';
+import { TokenInterface } from './interfaces/token.interface';
+import { StatusInterface } from '../common/interfaces/status.interface';
 
 /**
  * Enumeration on the TS is implemented in the form of dictionaries, meanwhile,
@@ -17,6 +19,8 @@ const AssociatedListOfFileTypes: string[] = [
   'video',
   'audio',
   'image',
+  'document',
+  'voice',
   'unknown',
 ];
 
@@ -25,9 +29,21 @@ export class FileRepository implements FileRepositoryInterface<FileInterface> {
   constructor(@InjectModel() private readonly knex: Knex) {}
 
   public async addOne(data: AddFileInterface): Promise<FileInterface> {
-    return this.knex<FileInterface>(TABLES.FILES).insert({
-      ...data,
-      type: ContentTypeEnum[AssociatedListOfFileTypes[data.type]],
-    });
+    const newFile = await this.knex<FileInterface>(TABLES.FILES)
+      .insert({
+        ...data,
+        type: ContentTypeEnum[AssociatedListOfFileTypes[data.type]],
+      })
+      .returning('*');
+    return newFile[0];
+  }
+
+  public async removeFileByToken(
+    data: TokenInterface,
+  ): Promise<StatusInterface> {
+    await this.knex(TABLES.FILES).del().where('token', data.token);
+    return {
+      status: true,
+    };
   }
 }

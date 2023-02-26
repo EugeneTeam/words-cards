@@ -11,15 +11,11 @@ service WordService {
 message CreateWordInputData {
   NewWordData word = 1;
   string userUuid = 2;
-  WordTranslations translations = 3;
+  repeated string translations = 3;
 }
 
 message NewWordData {
   string word = 1;
   optional string note = 2;
-  optional string categoryUuid = 4;
-}
-
-message WordTranslations {
-  repeated string translations = 1;
+  optional string categoryUuid = 3;
 }

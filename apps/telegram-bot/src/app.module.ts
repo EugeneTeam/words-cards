@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TelegrafModule } from 'nestjs-telegraf';
 
@@ -15,9 +15,16 @@ import { WordModule } from './word/word.module';
 import { CategoryModule } from './category/category.module';
 import { UserService } from './user/user.service';
 import { AppService } from './app.service';
+import redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
+    CacheModule.register({
+      isGlobal: true,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      store: redisStore,
+    }),
     ConfigModule.forRoot(ConfigModuleConfig),
     TelegrafModule.forRootAsync({
       imports: [UserModule],

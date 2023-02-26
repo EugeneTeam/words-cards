@@ -5,7 +5,6 @@ import { ConfigService } from '@nestjs/config';
 import { sessionMiddleware } from '../../middlewares/session.middleware';
 import { defaultLanguagesMiddleware } from '../../middlewares/default-languages.middleware';
 import { translateMiddleware } from '../../middlewares/translate.middleware';
-import { removePreviousKeyboardMiddleware } from '../../middlewares/remove-previous-keyboard.middleware';
 import { UserService } from '../../user/user.service';
 import { TelegrafContext } from '../../utils/get-data-from-context.util';
 
@@ -25,7 +24,6 @@ export class TelegramConfig implements TelegrafOptionsFactory {
         sessionMiddleware,
         defaultLanguagesMiddleware,
         translateMiddleware,
-        removePreviousKeyboardMiddleware,
         async (context: any, next: any) => {
           if (!context?.session?.userUuid) {
             const user = await this.userService.findUserByTelegramId({
