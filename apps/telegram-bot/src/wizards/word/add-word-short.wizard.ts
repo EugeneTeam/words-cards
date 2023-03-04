@@ -106,7 +106,7 @@ export class AddWordShortWizard extends WizardUtilsExtend {
     const word: string = context.wizard.state.word;
     const translations: string[] = context.wizard.state.translations;
 
-    const result: StatusInterface = await this.wordService.create({
+    const result = await this.wordService.create({
       word: {
         word,
       },
@@ -116,7 +116,7 @@ export class AddWordShortWizard extends WizardUtilsExtend {
       },
     });
 
-    if (result.status) {
+    if (result?.uuid) {
       await context.reply(
         context.translatorService.getTranslate('add-word-success'),
       );

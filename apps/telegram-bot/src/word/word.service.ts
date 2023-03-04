@@ -24,9 +24,9 @@ export class WordService implements OnModuleInit {
 
   public async create(
     data: CreateWordInputDataInterface,
-  ): Promise<StatusInterface> {
-    const observable: Observable<StatusInterface> =
+  ): Promise<WordInterface> {
+    const observable: Observable<WordInterface> =
       await this.wordService.createOneWordInTransaction(data);
-    return getDataFromObservableUtil<StatusInterface>(observable);
+    return getDataFromObservableUtil<WordInterface>(observable);
   }
 }

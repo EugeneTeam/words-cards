@@ -15,6 +15,7 @@ import { WordService } from '../../word/word.service';
 import { AddWordChooseCategoryUi } from '../../ui/add-word-choose-category.ui';
 import { AddWordAddNoteQuestionUi } from '../../ui/add-word-add-note-question.ui';
 import { AddWordWithMediaQuestionUi } from '../../ui/add-word-with-media-question.ui';
+import { WordFileService } from '../../word-file/word-file.service';
 
 @Wizard('add-word-wizard')
 export class AddWordWizard extends AddWordIsolation {
@@ -22,6 +23,7 @@ export class AddWordWizard extends AddWordIsolation {
     private readonly configurationService: ConfigurationService,
     private readonly wordService: WordService,
     private readonly fileService: FileService,
+    private readonly wordFileService: WordFileService,
     categoryService: CategoryService,
   ) {
     super({
@@ -110,6 +112,7 @@ export class AddWordWizard extends AddWordIsolation {
         context.wizard.state.file = {
           token: result.token,
           type: result.mediaType,
+          uuid: result.uuid,
         };
 
         await this.renderWizardStep(context, 7);
@@ -296,13 +299,13 @@ export class AddWordWizard extends AddWordIsolation {
   @Action('save-new-word')
   private async saveNewWord(@Ctx() context: ContextInterface): Promise<void> {
     const state = context.wizard.state;
-
+    const file = state?.file;
     const word = state.word;
     const translate = state.translation;
     const categoryUuid = state.categoryUuid;
     const note = state?.note;
 
-    const result = await this.wordService.create({
+    const addedWord = await this.wordService.create({
       word: {
         word,
         note,
@@ -312,7 +315,11 @@ export class AddWordWizard extends AddWordIsolation {
       userUuid: context.session.userUuid,
     });
 
-    if (result) {
+    if (file?.uuid) {
+      await this.wordFileService.addFileToWord(addedWord.uuid, file.uuid);
+    }
+
+    if (addedWord) {
       await this.deleteLastKeyboard(context);
       await context.reply(
         context.translatorService.getTranslate('add-word-complete'),

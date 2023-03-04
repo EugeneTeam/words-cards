@@ -23,47 +23,33 @@ export class WordService {
 
   public async createOneWordInTransaction(
     data: CreateWordInputDataInterface,
-  ): Promise<StatusInterface> {
+  ): Promise<WordInterface> {
     const { word, translations, userUuid } = data;
-    return new Promise(async (resolve, reject) => {
-      await this.knex
-        .transaction(async (transaction: Transaction) => {
-          const configuration: ConfigurationInterface =
-            await this.configurationService.findOneByUserUuid({
-              uuid: userUuid,
-            });
-
-          const newWord = await this.wordRepository.createOneWordInTransaction(
-            {
-              ...word,
-              userUuid,
-              originalLanguageUuid:
-                configuration.defaultLanguageForNewWord.uuid,
-            },
-            transaction,
-          );
-
-          await this.translationService.createManyInTransaction(
-            {
-              translations: translations as unknown as string[],
-              wordUuid: newWord.uuid,
-              originalLanguageUuid:
-                configuration.defaultLanguageForWordTranslation.uuid,
-            },
-            transaction,
-          );
-        })
-        .then(() =>
-          resolve({
-            status: true,
-          }),
-        )
-        .catch((error) => {
-          console.error(error);
-          reject({
-            status: false,
-          });
+    return this.knex.transaction(async (transaction: Transaction) => {
+      const configuration: ConfigurationInterface =
+        await this.configurationService.findOneByUserUuid({
+          uuid: userUuid,
         });
+
+      const newWord = await this.wordRepository.createOneWordInTransaction(
+        {
+          ...word,
+          userUuid,
+          originalLanguageUuid: configuration.defaultLanguageForNewWord.uuid,
+        },
+        transaction,
+      );
+
+      await this.translationService.createManyInTransaction(
+        {
+          translations: translations as unknown as string[],
+          wordUuid: newWord.uuid,
+          originalLanguageUuid:
+            configuration.defaultLanguageForWordTranslation.uuid,
+        },
+        transaction,
+      );
+      return newWord;
     });
   }
 }

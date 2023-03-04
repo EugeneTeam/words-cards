@@ -11,6 +11,7 @@ import { ConfigurationModule } from './configuration/configuration.module';
 import { WordModule } from './word/word.module';
 import { TranslationModule } from './translation/translation.module';
 import { CategoryModule } from './category/category.module';
+import { WordFileModule } from './word-file/word-file.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { CategoryModule } from './category/category.module';
     WordModule,
     TranslationModule,
     CategoryModule,
+    WordFileModule,
   ],
 })
 export class ApiModule {}

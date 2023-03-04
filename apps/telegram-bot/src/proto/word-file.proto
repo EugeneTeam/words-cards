@@ -1,0 +1,18 @@
+syntax = 'proto3';
+
+package proto;
+
+service WordFileService {
+  rpc AddFileToWord(AddFileToWordInputData) returns (WordFile);
+}
+
+message AddFileToWordInputData {
+  string wordUuid = 1;
+  string fileUuid = 2;
+}
+
+message WordFile {
+  string wordUuid = 1;
+  string fileUuid = 2;
+}
+

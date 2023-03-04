@@ -8,6 +8,7 @@ import { CategoryModule } from '../category/category.module';
 import { CategoryInfoWizard } from './category/category-info.wizard';
 import { AddWordWizard } from './word/add-word.wizard';
 import { FileModule } from '../file/file.module';
+import { WordFileModule } from '../word-file/word-file.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { FileModule } from '../file/file.module';
     WordModule,
     CategoryModule,
     FileModule,
+    WordFileModule,
   ],
   providers: [
     AddWordShortWizard,

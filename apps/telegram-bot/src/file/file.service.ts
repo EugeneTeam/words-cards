@@ -75,6 +75,8 @@ export class FileService implements OnModuleInit {
             status: false,
             message: 'Unavailable image type',
             mediaType: content.type,
+            token: null,
+            uuid: null,
           });
           return;
         }
@@ -85,6 +87,8 @@ export class FileService implements OnModuleInit {
           status: false,
           message: 'Unknown filetype',
           mediaType: content.type,
+          token: null,
+          uuid: null,
         });
         return;
       }
@@ -115,7 +119,8 @@ export class FileService implements OnModuleInit {
             status: true,
             message: 'success',
             mediaType: content.type,
-            token: file.token,
+            token: file?.token,
+            uuid: file?.uuid,
           });
         });
       });

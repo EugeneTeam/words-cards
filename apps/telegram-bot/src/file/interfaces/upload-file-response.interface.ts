@@ -4,5 +4,6 @@ export interface UploadFileResponseInterface {
   readonly status: boolean;
   readonly message: string | null;
   readonly mediaType: ContentTypeEnum;
-  readonly token?: string;
+  readonly token: string | null;
+  readonly uuid: string | null;
 }
